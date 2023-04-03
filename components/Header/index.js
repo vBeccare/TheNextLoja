@@ -7,13 +7,13 @@ import {
   MenuList,
   Button,
   Text,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react'
 
-import useLocal from "../../hooks/useLocal";
-import useHeader from "./hooks/useHeader";
+import useLocal from '../../hooks/useLocal'
+import useHeader from './hooks/useHeader'
 
 const Header = () => {
-  const { isAdmin } = useLocal();
+  const { isAdmin } = useLocal()
   const {
     handleSignIn,
     handleUsers,
@@ -21,7 +21,7 @@ const Header = () => {
     handleHome,
     isProductPath,
     isUserPath,
-  } = useHeader();
+  } = useHeader()
 
   return (
     <Box
@@ -43,8 +43,8 @@ const Header = () => {
         {isAdmin && (
           <Text
             color="white"
-            fontWeight={isUserPath && "bold"}
-            borderBottom={isUserPath && "1px"}
+            fontWeight={isUserPath && 'bold'}
+            borderBottom={isUserPath && '1px'}
             cursor="pointer"
             onClick={handleUsers}
           >
@@ -52,8 +52,8 @@ const Header = () => {
           </Text>
         )}
         <Text
-          fontWeight={isProductPath && "bold"}
-          borderBottom={isProductPath && "1px"}
+          fontWeight={isProductPath && 'bold'}
+          borderBottom={isProductPath && '1px'}
           cursor="pointer"
           color="white"
           onClick={handleProducts}
@@ -72,7 +72,7 @@ const Header = () => {
         </Menu>
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

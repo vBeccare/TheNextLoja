@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "description": "Fancy Next.js app",
   "scripts": {
-    "dev": "next",
+    "dev": "next -p 3001",
     "build": "next build",
-    "start": "next start",
-    "build:static": "next build && next out"
+    "start": "next start -p 3001",
+    "build:static": "next build && next out",
+    "format": "prettier --check --ignore-path .gitignore .",
+    "format:fix": "prettier --write --ignore-path .gitignore ."
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.17",
@@ -23,5 +25,8 @@
     "react-paginate": "^8.1.4",
     "react-simple-image-viewer": "^1.2.2",
     "simple-mask-money": "3.0.1"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.7"
   }
 }

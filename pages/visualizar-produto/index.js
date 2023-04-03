@@ -1,9 +1,9 @@
-import { Button, Flex, Image, Text } from "@chakra-ui/react";
-import Header from "../../components/Header";
-import useVisualizarProduto from "./hooks/useVisualizarProduto";
+import { Button, Flex, Image, Text } from '@chakra-ui/react'
+import Header from '../../components/Header'
+import useVisualizarProduto from './hooks/useVisualizarProduto'
 
 const VisualizarProduto = () => {
-  const { nome, descricao, preco } = useVisualizarProduto();
+  const { nome, descricao, preco } = useVisualizarProduto()
 
   return (
     <Flex
@@ -13,9 +13,9 @@ const VisualizarProduto = () => {
       flexDirection="column"
     >
       <Header />
-      <Flex padding="32px" marginX={"auto"}>
+      <Flex padding="32px" marginX={'auto'}>
         <Flex
-          marginY={"auto"}
+          marginY={'auto'}
           flexDirection="column"
           alignItems="center"
           backgroundColor="#d9d9d9"
@@ -62,7 +62,7 @@ const VisualizarProduto = () => {
         </Flex>
       </Flex>
     </Flex>
-  );
-};
+  )
+}
 
-export default VisualizarProduto;
+export default VisualizarProduto
