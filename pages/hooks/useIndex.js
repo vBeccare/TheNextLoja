@@ -9,7 +9,6 @@ const useIndex = () => {
     localStorage.setItem('token', data.token)
     localStorage.setItem('email', data.email)
     localStorage.setItem('nome', data.name)
-    Router.push('/home')
   }
 
   const handleLogin = () => {
