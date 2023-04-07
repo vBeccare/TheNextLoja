@@ -7,6 +7,8 @@ import {
   MenuList,
   Button,
   Text,
+  Flex,
+  Input,
 } from '@chakra-ui/react'
 
 import useLocal from '../../hooks/useLocal'
@@ -14,63 +16,59 @@ import useHeader from './hooks/useHeader'
 
 const Header = () => {
   const { isAdmin } = useLocal()
-  const {
-    handleSignIn,
-    handleUsers,
-    handleProducts,
-    handleHome,
-    isProductPath,
-    isUserPath,
-  } = useHeader()
+  const { isLogged = false, userName = 'Visitante', handleHome } = useHeader()
 
   return (
     <Box
       display="flex"
-      justifyContent="space-between"
       width="100%"
       alignItems="center"
-      paddingX="64px"
+      paddingX="160px"
       h="120px"
       bgColor="teal.500"
     >
       <Image
-        boxSize="80px"
+        boxSize="100px"
         cursor="pointer"
         src="/logoadm.png"
         onClick={handleHome}
       />
-      <Box display="flex" gap="40px" fontSize={16} justifyContent="">
-        {isAdmin && (
-          <Text
+      <Box
+        display="flex"
+        marginLeft="80px"
+        alignItems="center"
+        width="100%"
+        fontSize={16}
+      >
+        <Flex alignItems="center" width="100%" justifyContent="start" marginRight="16px">
+          <Input
             color="white"
-            fontWeight={isUserPath && 'bold'}
-            borderBottom={isUserPath && '1px'}
-            cursor="pointer"
-            onClick={handleUsers}
-          >
-            Usuários
-          </Text>
-        )}
-        <Text
-          fontWeight={isProductPath && 'bold'}
-          borderBottom={isProductPath && '1px'}
-          cursor="pointer"
-          color="white"
-          onClick={handleProducts}
-        >
-          Produtos
-        </Text>
-      </Box>
-      <Box>
+            placeholder=""
+            maxWidth="400px"
+            size="md"
+            type="search"
+          />
+
+          <Image marginLeft="8px" boxSize="20px" src="/iconSearch2.png" />
+        </Flex>
         <Menu>
-          <MenuButton as={Button} padding={2} height="auto" borderRadius="50%">
-            <Image boxSize="40px" src="/avatar.png" />
+          <MenuButton as={Button} padding={3} borderRadius="50%">
+            <Image boxSize="20px" src="/avatar.png" />
           </MenuButton>
+          <MenuButton as={Text} padding={3} borderRadius="50%">
+            <Text cursor="pointer" fontSize="12px" fontWeight="bold" color="white">
+              {isLogged ? `Olá, ${userName}` : 'Olá, faça login ou cadastre-se'}
+            </Text>
+          </MenuButton>
+
           <MenuList>
-            <MenuItem onClick={handleSignIn}>Sair</MenuItem>
+            <MenuItem onClick={() => null}>Entre</MenuItem>
+            <MenuItem onClick={() => null}>Cadastre-se</MenuItem>
           </MenuList>
         </Menu>
+        <Image marginLeft="auto" boxSize="50px" src="/carrinho.png" />
       </Box>
+      <Box></Box>
     </Box>
   )
 }
