@@ -11,6 +11,8 @@ import {
   Input,
 } from '@chakra-ui/react'
 
+import styles from './style.module.css'
+
 import useLocal from '../../hooks/useLocal'
 import useHeader from './hooks/useHeader'
 
@@ -40,7 +42,12 @@ const Header = () => {
         width="100%"
         fontSize={16}
       >
-        <Flex alignItems="center" width="100%" justifyContent="start" marginRight="16px">
+        <Flex
+          alignItems="center"
+          width="100%"
+          justifyContent="start"
+          marginRight="16px"
+        >
           <Input
             color="white"
             placeholder=""
@@ -52,13 +59,31 @@ const Header = () => {
           <Image marginLeft="8px" boxSize="20px" src="/iconSearch2.png" />
         </Flex>
         <Menu>
-          <MenuButton as={Button} padding={3} borderRadius="50%">
-            <Image boxSize="20px" src="/avatar.png" />
-          </MenuButton>
-          <MenuButton as={Text} padding={3} borderRadius="50%">
-            <Text cursor="pointer" fontSize="12px" fontWeight="bold" color="white">
-              {isLogged ? `Olá, ${userName}` : 'Olá, faça login ou cadastre-se'}
-            </Text>
+          <MenuButton
+            className={styles.menuWrapper}
+            as={Flex}
+            cursor="pointer"
+            padding={3}
+          >
+            <Flex className="flexMenu">
+              <Image
+                boxSize="40px"
+                src="/avatar.png"
+                bgColor="gray.200"
+                borderRadius="50%"
+                padding="8px"
+              />
+              <Text
+                fontSize="12px"
+                marginLeft="8px"
+                fontWeight="bold"
+                color="white"
+              >
+                {isLogged
+                  ? `Olá, ${userName}`
+                  : 'Olá, faça login ou cadastre-se'}
+              </Text>
+            </Flex>
           </MenuButton>
 
           <MenuList>

@@ -1,0 +1,16 @@
+.menuWrapper:hover > span div img {
+  background-color: #c0c3c6;
+}
+
+.menuWrapper:hover > span div p {
+  text-decoration: underline;
+}
+
+.pagination > li {
+  list-style: none;
+}
+
+.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
