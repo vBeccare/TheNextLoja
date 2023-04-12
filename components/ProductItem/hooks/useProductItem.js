@@ -1,9 +1,12 @@
-const useProductItem = () => {
-	const handleProductDetails = () => null
+import Router from 'next/router'
 
-	return {
-		handleProductDetails
-	}
+const useProductItem = () => {
+  const handleProductDetails = (id) => {
+    Router.push(`/visualizar-produto/?produto=${id}`)
+  }
+  return {
+    handleProductDetails,
+  }
 }
 
 export default useProductItem

@@ -51,6 +51,7 @@ const Header = () => {
           <Input
             color="white"
             placeholder=""
+            disabled
             maxWidth="400px"
             size="md"
             type="search"
@@ -91,7 +92,7 @@ const Header = () => {
             <MenuItem onClick={() => null}>Cadastre-se</MenuItem>
           </MenuList>
         </Menu>
-        <Image marginLeft="auto" boxSize="50px" src="/carrinho.png" />
+        <Image cursor="not-allowed" opacity={0.8} marginLeft="auto" boxSize="50px" src="/carrinho.png" />
       </Box>
       <Box></Box>
     </Box>

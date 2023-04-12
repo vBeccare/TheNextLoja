@@ -1,38 +1,20 @@
-import { useToast } from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
 import Router from 'next/router'
-import { userLogin } from '../../services/users'
+import { useToast } from '@chakra-ui/react'
+import { getAllProduct } from '../../services/product'
 
 const useIndex = () => {
-  const toast = useToast()
+  const [productList, setProductList] = useState([])
 
-  const handleSignUp = (data) => {
-    localStorage.setItem('token', data.token)
-    localStorage.setItem('email', data.email)
-    localStorage.setItem('nome', data.name)
-  }
+  useEffect(() => {
+    getAllProduct({ page: 1 }).then((response) => {
+      setProductList(response.data.content)
 
-  const handleLogin = () => {
-    userLogin()
-      .then((res) => {
-        handleSignUp(res.data)
-      })
-      .catch(() => {
-        toast({
-          title: 'Login',
-          description: 'Falha ao tentar entrar',
-          position: 'top-right',
-          status: 'error',
-          duration: 3000,
-          isClosable: true,
-        })
-      })
-  }
+    })
+  }, [])
 
   return {
-    handleSignUp,
-    handleChangeEmail,
-    handleChangePassword,
-    handleLogin,
+    formattedProductList: productList.slice(0,20)
   }
 }
 
