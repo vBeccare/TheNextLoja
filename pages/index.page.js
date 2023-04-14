@@ -6,7 +6,7 @@ import useIndex from './hooks/useIndex'
 import { getMoneyMask } from '../utils/formatters'
 
 const HomePage = () => {
-  const { formattedProductList } = useIndex()
+  const { formattedProductList = [] } = useIndex()
   return (
     <Flex
       height="100vh"
