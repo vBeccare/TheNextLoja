@@ -6,13 +6,8 @@ const useHeader = () => {
     Router.push('/')
   }
 
-  const handleSignUp = () => {
-    Router.push('/cadastrar')
-  }
-
   return {
     handleHome,
-    handleSignUp
   }
 }
 

@@ -18,7 +18,12 @@ import useHeader from './hooks/useHeader'
 
 const Header = () => {
   const { isAdmin } = useLocal()
-  const { isLogged = false, userName = 'Visitante', handleHome } = useHeader()
+  const {
+    isLogged = false,
+    userName = 'Visitante',
+    handleHome,
+    handleSignUp,
+  } = useHeader()
 
   return (
     <Box
@@ -89,10 +94,16 @@ const Header = () => {
 
           <MenuList>
             <MenuItem onClick={() => null}>Entre</MenuItem>
-            <MenuItem onClick={() => null}>Cadastre-se</MenuItem>
+            <MenuItem onClick={handleSignUp}>Cadastre-se</MenuItem>
           </MenuList>
         </Menu>
-        <Image cursor="not-allowed" opacity={0.8} marginLeft="auto" boxSize="50px" src="/carrinho.png" />
+        <Image
+          cursor="not-allowed"
+          opacity={0.8}
+          marginLeft="auto"
+          boxSize="50px"
+          src="/carrinho.png"
+        />
       </Box>
       <Box></Box>
     </Box>
