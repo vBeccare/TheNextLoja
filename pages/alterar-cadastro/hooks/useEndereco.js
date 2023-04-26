@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { getCepData } from '../../../services/cep'
+import { postAddress } from '../../../services/address'
 
-const useCadastro = () => {
+const useCadastro = ({ onClose, getAddressList }) => {
   const [enderecoEn, setEnderecoEn] = useState({})
   const [errorCepE, setErrorCepE] = useState(false)
 
@@ -12,6 +13,7 @@ const useCadastro = () => {
   const [bairroE, setBairroE] = useState()
   const [cityE, setCityE] = useState()
   const [ufE, setUfE] = useState()
+  const [clientId, setClientId] = useState()
 
   const formattedCepE = cepE?.replace('_', '')
 
@@ -42,7 +44,27 @@ const useCadastro = () => {
         .catch(() => {})
   }
 
-  const handleNewAddress = () => null
+  const payload = {
+    endereco: logradouroE,
+    cep: cepE,
+    numero: numberE,
+    complemento: complementE,
+    bairro: bairroE,
+    cidade: cityE,
+    uf: ufE,
+    tipo: 'E',
+    cliente: {
+      id: clientId,
+    },
+  }
+
+  const handleNewAddress = () => {
+    postAddress(payload).then(() => {
+      alert('Endereço cadastrado com sucesso!')
+      getAddressList()
+      onClose()
+    })
+  }
 
   useEffect(() => {
     handleGetAddress()
@@ -54,6 +76,10 @@ const useCadastro = () => {
       setUfE('')
     }
   }, [cepE])
+
+  useEffect(() => {
+    setClientId(localStorage.getItem('id'))
+  }, [])
 
   useEffect(() => {
     const endereco = {

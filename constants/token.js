@@ -1,1 +1,1 @@
-export const TOKEN = 'Basic dGVzdGVAZW1haWwuY29tOjEyMzQ='
+export const TOKEN = 'Basic dmJlY2NhcmVAZ21haWwuY29tOjEyMzQ='

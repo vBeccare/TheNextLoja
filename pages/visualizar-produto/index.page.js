@@ -1,11 +1,11 @@
-import { Button, Flex, Image, Text } from "@chakra-ui/react";
-import Header from "../../components/Header";
-import ImageViewer from "react-simple-image-viewer";
+import { Button, Flex, Image, Text } from '@chakra-ui/react'
+import Header from '../../components/Header'
+import ImageViewer from 'react-simple-image-viewer'
 
-import useVisualizarProduto from "./hooks/useVisualizarProduto";
-import Rating from "../../components/Rating";
+import useVisualizarProduto from './hooks/useVisualizarProduto'
+import Rating from '../../components/Rating'
 
-const VisualizarProduto = () => {
+const VisualizarProduto = ({ reload, setReload }) => {
   const {
     nome,
     descricao,
@@ -20,7 +20,7 @@ const VisualizarProduto = () => {
     openImageViewer,
     imagePrincipalId,
     avaliacao,
-  } = useVisualizarProduto();
+  } = useVisualizarProduto()
 
   return (
     <Flex
@@ -29,10 +29,10 @@ const VisualizarProduto = () => {
       display="flex"
       flexDirection="column"
     >
-      <Header />
-      <Flex padding="32px" marginX={"auto"}>
+      <Header reload={reload} setReload={setReload} />
+      <Flex padding="32px" marginX={'auto'}>
         <Flex
-          marginY={"auto"}
+          marginY={'auto'}
           flexDirection="column"
           alignItems="center"
           backgroundColor="#d9d9d9"
@@ -59,7 +59,7 @@ const VisualizarProduto = () => {
                   src={image.file}
                   onClick={() => selectedViewImage(image.id)}
                 />
-              );
+              )
             })}
           </Flex>
         </Flex>
@@ -93,14 +93,14 @@ const VisualizarProduto = () => {
             disableScroll={false}
             closeOnClickOutside={true}
             backgroundStyle={{
-              backgroundColor: "rgba(0,0,0,0.8)",
+              backgroundColor: 'rgba(0,0,0,0.8)',
             }}
             onClose={closeImageViewer}
           />
         )}
       </Flex>
     </Flex>
-  );
-};
+  )
+}
 
-export default VisualizarProduto;
+export default VisualizarProduto

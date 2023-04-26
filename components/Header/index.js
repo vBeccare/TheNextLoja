@@ -16,14 +16,17 @@ import styles from './style.module.css'
 import useLocal from '../../hooks/useLocal'
 import useHeader from './hooks/useHeader'
 
-const Header = () => {
+const Header = ({reload, setReload}) => {
   const { isAdmin } = useLocal()
   const {
-    isLogged = false,
-    userName = 'Visitante',
+    isLogged,
+    clientName,
     handleHome,
     handleSignUp,
-  } = useHeader()
+    handleSignIn,
+    handleModify,
+    handleLogout
+  } = useHeader({reload, setReload})
 
   return (
     <Box
@@ -83,19 +86,29 @@ const Header = () => {
                 fontSize="12px"
                 marginLeft="8px"
                 fontWeight="bold"
+                minWidth="100px"
                 color="white"
               >
                 {isLogged
-                  ? `Olá, ${userName}`
+                  ? `Olá, ${clientName}`
                   : 'Olá, faça login ou cadastre-se'}
               </Text>
             </Flex>
           </MenuButton>
 
-          <MenuList>
-            <MenuItem onClick={() => null}>Entre</MenuItem>
-            <MenuItem onClick={handleSignUp}>Cadastre-se</MenuItem>
-          </MenuList>
+          {!isLogged && (
+            <MenuList>
+              <MenuItem onClick={handleSignIn}>Entre</MenuItem>
+              <MenuItem onClick={handleSignUp}>Cadastre-se</MenuItem>
+            </MenuList>
+          )}
+
+          {isLogged && (
+            <MenuList>
+              <MenuItem onClick={handleModify}>Alterar cadastro</MenuItem>
+              <MenuItem onClick={handleLogout}>Sair</MenuItem>
+            </MenuList>
+          )}
         </Menu>
         <Image
           cursor="not-allowed"

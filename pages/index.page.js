@@ -5,7 +5,7 @@ import Header from '../components/Header'
 import useIndex from './hooks/useIndex'
 import { getMoneyMask } from '../utils/formatters'
 
-const HomePage = () => {
+const HomePage = ({reload, setReload}) => {
   const { formattedProductList = [] } = useIndex()
   return (
     <Flex
@@ -14,7 +14,7 @@ const HomePage = () => {
       flexDirection="column"
       alignItems="center"
     >
-      <Header />
+      <Header reload={reload} setReload={setReload}/>
       <Flex width="100vw">
         <Flex
           marginTop={24}

@@ -24,32 +24,28 @@ import useCadastro from './hooks/useCadastro'
 import useEndereco from './hooks/useEndereco'
 import useModal from './hooks/useModal'
 
-const SignUp = ({
-  userAddresses = [
-    {
-      bairro: 'Santo Amaro',
-      cep: '04423-212',
-      address: 'Rua do Calango',
-      number: 123,
-      complement: '',
-      city: 'São Paulo',
-      uf: 'SP',
-      isDefault: true,
-      id: 1,
-    },
-    {
-      bairro: 'Santo Amaro',
-      cep: '04323-212',
-      address: 'Rua do Morcego',
-      number: 123,
-      complement: '',
-      city: 'São Paulo',
-      uf: 'SP',
-      id: 1,
-    },
-    ,
-  ],
-}) => {
+const SignUp = ({ setReload, setReloadAddress, reloadAddress }) => {
+  console.log({setReloadAddress})
+  const { initialChangeRef, finalChangeRef, isEditOpen, onClose, openModal } =
+    useModal()
+
+  const {
+    setName,
+    setBirthDate,
+    setGender,
+    setPassword,
+    setConfirmPassword,
+    gender,
+    name,
+    birthDate,
+    handleSignUp,
+    addressList = [],
+    getAddressList,
+  } = useCadastro({
+    setReload,
+    reloadAddress,
+  })
+
   const {
     handleNewAddress,
 
@@ -69,23 +65,7 @@ const SignUp = ({
     bairroE,
     cityE,
     ufE,
-  } = useEndereco()
-
-  const {
-    setName,
-    setBirthDate,
-    setGender,
-    setPassword,
-    setConfirmPassword,
-    gender,
-    handleSignUp,
-    goToLogin,
-  } = useCadastro({
-    enderecoEn,
-  })
-
-  const { initialChangeRef, finalChangeRef, isEditOpen, onClose, openModal } =
-    useModal()
+  } = useEndereco({ onClose, getAddressList })
 
   return (
     <Flex flexDirection="column" marginBottom="100px">
@@ -102,12 +82,16 @@ const SignUp = ({
         <Flex gap={8} marginTop={8} marginX={16}>
           <FormControl isInvalid={false}>
             <FormLabel>Nome completo</FormLabel>
-            <Input onChange={(e) => setName(e.target.value)} />
+            <Input value={name} onChange={(e) => setName(e.target.value)} />
             <FormErrorMessage>Digite seu nome completo</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={false}>
             <FormLabel>Data Nascimento</FormLabel>
-            <Input type="date" onChange={(e) => setBirthDate(e.target.value)} />
+            <Input
+              value={birthDate}
+              type="date"
+              onChange={(e) => setBirthDate(e.target.value)}
+            />
           </FormControl>
         </Flex>
         <Flex gap={8} marginTop={8} marginX={16} maxWidth="250px">
@@ -150,24 +134,28 @@ const SignUp = ({
           <Flex flexDirection="column" gap={8} marginTop={16}>
             <Text fontWeight="bold">Endereços</Text>
 
-            <Flex gap={8} alignItems="center">
-              {userAddresses.map((address) => {
-                return (
-                  <AddressCard
-                    bairro={address.bairro}
-                    cep={address.cep}
-                    address={address.address}
-                    number={address.number}
-                    complement={address.complement}
-                    city={address.city}
-                    uf={address.uf}
-                    isDefault={address.isDefault}
-                    id={address.id}
-                  />
-                )
-              })}
-
-              <Button onClick={openModal} colorScheme="green">
+            <Flex alignItems="center">
+              <Flex gap={8} maxWidth={900} padding={8} overflowX="scroll">
+                {addressList.map((address) => {
+                  return (
+                    <AddressCard
+                      bairro={address.bairro}
+                      cep={address.cep}
+                      address={address.endereco}
+                      number={address.numero}
+                      complement={address.complemento}
+                      city={address.cidade}
+                      uf={address.uf}
+                      isDefault={address.padrao}
+                      tipo={address.tipo}
+                      id={address.id}
+                      setReloadAddress={setReloadAddress}
+                      reloadAddress={reloadAddress}
+                    />
+                  )
+                })}
+              </Flex>
+              <Button marginLeft={8} onClick={openModal} colorScheme="green">
                 Adicionar novo
               </Button>
             </Flex>

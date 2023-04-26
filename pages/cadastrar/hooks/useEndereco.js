@@ -13,6 +13,7 @@ const useCadastro = () => {
   const [enderecoEn, setEnderecoEn] = useState({})
   const [enderecoFa, setEnderecoFa] = useState({})
   const [errorCep, setErrorCep] = useState(false)
+  const [errorCepE, setErrorCepE] = useState(false)
 
   const [isSameAddress, setIsSameAddress] = useState(true)
 
@@ -40,6 +41,17 @@ const useCadastro = () => {
         .then((res) => {
           const data = res?.data
 
+          const isError = data.erro
+
+          if (isError) {
+            isBillingCep ? setErrorCep(true) : setErrorCepE(true)
+            return
+          }
+
+          if (!isError) {
+            isBillingCep ? setErrorCep(false) : setErrorCepE(false)
+          }
+
           isBillingCep
             ? setLogradouro(data?.logradouro)
             : setLogradouroE(data?.logradouro)
@@ -47,9 +59,7 @@ const useCadastro = () => {
           isBillingCep ? setCity(data?.localidade) : setCityE(data?.localidade)
           isBillingCep ? setUf(data?.uf) : setUfE(data?.uf)
         })
-        .catch(() => {
-          setErrorCep(true)
-        })
+        .catch(() => {})
   }
 
   const handleSameAddress = () => {
@@ -82,31 +92,43 @@ const useCadastro = () => {
       setUf('')
     }
   }, [cep])
+
   useEffect(() => {
     handleGetAddress('cepE')
 
-    if (!isCepValid) {
+    if (!isCepEValid) {
       setLogradouroE('')
       setBairroE('')
       setCityE('')
       setUfE('')
     }
-  }, [])
+  }, [cepE])
 
   useEffect(() => {
-    const endereco = { cep, logradouro, number, complement, bairro, city, uf }
+    const endereco = {
+      cep,
+      endereco: logradouro,
+      numero: number,
+      complemento: complement,
+      bairro,
+      cidade: city,
+      uf,
+      tipo: 'F',
+    }
     setEnderecoEn(endereco)
   }, [cep, logradouro, number, complement, bairro, city, uf])
 
   useEffect(() => {
     const endereco = {
-      cepE,
-      logradouroE,
-      numberE,
-      complementE,
-      bairroE,
-      cityE,
-      ufE,
+      cep: cepE,
+      endereco: logradouroE,
+      numero: numberE,
+      complemento: complementE,
+      bairro: bairroE,
+      cidade: cityE,
+      uf: ufE,
+      tipo: 'E',
+      padrao: true,
     }
     setEnderecoFa(endereco)
   }, [cepE, logradouroE, numberE, complementE, bairroE, cityE, ufE])
@@ -121,7 +143,12 @@ const useCadastro = () => {
     setCep,
     cep,
     errorCep,
+    errorCepE,
 
+    setLogradouro,
+    setBairro,
+    setCity,
+    setUf,
     logradouro,
     bairro,
     city,
@@ -135,10 +162,13 @@ const useCadastro = () => {
 
     setCepE,
     cepE,
+
     setLogradouroE,
     setBairroE,
     setCityE,
     setUfE,
+    setNumberE,
+    setComplementE,
     cepE,
     logradouroE,
     numberE,

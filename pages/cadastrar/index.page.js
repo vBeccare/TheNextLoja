@@ -23,7 +23,12 @@ const SignUp = () => {
     setCep,
     cep,
     errorCep,
+    errorCepE,
 
+    setLogradouro,
+    setBairro,
+    setCity,
+    setUf,
     logradouro,
     bairro,
     city,
@@ -37,10 +42,13 @@ const SignUp = () => {
 
     setCepE,
     cepE,
+
     setLogradouroE,
     setBairroE,
     setCityE,
     setUfE,
+    setNumberE,
+    setComplementE,
     logradouroE,
     numberE,
     complementE,
@@ -58,8 +66,18 @@ const SignUp = () => {
     setBirthDate,
     setGender,
     setEmail,
+    setPassword,
+    setConfirmPassword,
     gender,
     handleSignUp,
+    goToLogin,
+    name,
+    emailValidator,
+    email,
+
+    hasSamePasswords,
+    isButtonDisabled,
+    nameValidator
   } = useCadastro({
     enderecoFa,
     enderecoEn,
@@ -78,9 +96,9 @@ const SignUp = () => {
           Cadastro
         </Text>
         <Flex gap={8} marginTop={8} marginX={16}>
-          <FormControl isInvalid={false}>
+          <FormControl isInvalid={name && !nameValidator}>
             <FormLabel>Nome completo</FormLabel>
-            <Input onChange={(e) => setName(e.target.value)} />
+            <Input placeholder='Nome completo' onChange={(e) => setName(e.target.value)} />
             <FormErrorMessage>Digite seu nome completo</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={cpf && !cpfValid}>
@@ -102,7 +120,7 @@ const SignUp = () => {
             <FormLabel>Data Nascimento</FormLabel>
             <Input type="date" onChange={(e) => setBirthDate(e.target.value)} />
           </FormControl>
-          <FormControl isInvalid={false}>
+          <FormControl isInvalid={email && !emailValidator}>
             <FormLabel>Email</FormLabel>
             <Input
               placeholder="email@email.com"
@@ -125,6 +143,28 @@ const SignUp = () => {
             </Select>
           </FormControl>
         </Flex>
+        <Flex gap={8} marginTop={8} marginX={16}>
+          <FormControl isInvalid={!hasSamePasswords}>
+            <FormLabel>Senha</FormLabel>
+            <Input
+              placeholder="********"
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <FormErrorMessage>As senhas não são iguais</FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={!hasSamePasswords}>
+            <FormLabel>Confirmar senha</FormLabel>
+            <Input
+              placeholder="********"
+              type="password"
+              onChange={(e) => {
+                setConfirmPassword(e.target.value)
+              }}
+            />
+            <FormErrorMessage>As senhas não são iguais</FormErrorMessage>
+          </FormControl>
+        </Flex>
         <Flex flexDirection="column" gap={8} marginTop={16} marginX={16}>
           <Text fontWeight="bold">Endereço de faturamento</Text>
           <Flex maxWidth="250px">
@@ -144,9 +184,9 @@ const SignUp = () => {
               <Input
                 value={logradouro}
                 isReadOnly={!errorCep}
+                onChange={(e) => setLogradouro(e.target.value)}
                 backgroundColor={cep && !errorCep && 'gray.100'}
               />
-              <FormErrorMessage>Digite seu nome completo</FormErrorMessage>
             </FormControl>
 
             <FormControl isInvalid={false}>
@@ -154,9 +194,9 @@ const SignUp = () => {
               <Input
                 value={bairro}
                 isReadOnly={!errorCep}
+                onChange={(e) => setBairro(e.target.value)}
                 backgroundColor={cep && !errorCep && 'gray.100'}
               />
-              <FormErrorMessage>Digite seu nome completo</FormErrorMessage>
             </FormControl>
           </Flex>
 
@@ -164,13 +204,11 @@ const SignUp = () => {
             <FormControl isInvalid={false}>
               <FormLabel>Numero</FormLabel>
               <Input onChange={(e) => setNumber(e.target.value)} />
-              <FormErrorMessage>Digite seu nome completo</FormErrorMessage>
             </FormControl>
 
             <FormControl isInvalid={false}>
               <FormLabel>Complemento</FormLabel>
               <Input onChange={(e) => setComplement(e.target.value)} />
-              <FormErrorMessage>Digite seu nome completo</FormErrorMessage>
             </FormControl>
           </Flex>
 
@@ -180,9 +218,9 @@ const SignUp = () => {
               <Input
                 value={city}
                 isReadOnly={!errorCep}
+                onChange={(e) => setCity(e.target.value)}
                 backgroundColor={cep && !errorCep && 'gray.100'}
               />
-              <FormErrorMessage>Digite seu nome completo</FormErrorMessage>
             </FormControl>
 
             <FormControl isInvalid={false} maxWidth="100px">
@@ -190,9 +228,9 @@ const SignUp = () => {
               <Input
                 value={uf}
                 isReadOnly={!errorCep}
+                onChange={(e) => setUf(e.target.value)}
                 backgroundColor={cep && !errorCep && 'gray.100'}
               />
-              <FormErrorMessage>Digite seu nome completo</FormErrorMessage>
             </FormControl>
           </Flex>
 
@@ -230,6 +268,8 @@ const SignUp = () => {
                   <Input
                     value={logradouroE}
                     onChange={(e) => setLogradouroE(e.target.value)}
+                    isReadOnly={!errorCepE}
+                    backgroundColor={cepE && !errorCepE && 'gray.100'}
                   />
                 </FormControl>
 
@@ -238,6 +278,8 @@ const SignUp = () => {
                   <Input
                     value={bairroE}
                     onChange={(e) => setBairroE(e.target.value)}
+                    isReadOnly={!errorCepE}
+                    backgroundColor={cepE && !errorCepE && 'gray.100'}
                   />
                 </FormControl>
               </Flex>
@@ -255,7 +297,7 @@ const SignUp = () => {
                   <FormLabel>Complemento</FormLabel>
                   <Input
                     value={complementE}
-                    onChange={(e) => setComplementoE()}
+                    onChange={(e) => setComplementE(e.target.value)}
                   />
                 </FormControl>
               </Flex>
@@ -266,12 +308,19 @@ const SignUp = () => {
                   <Input
                     value={cityE}
                     onChange={(e) => setCityE(e.target.value)}
+                    isReadOnly={!errorCepE}
+                    backgroundColor={cepE && !errorCepE && 'gray.100'}
                   />
                 </FormControl>
 
                 <FormControl isInvalid={false}>
                   <FormLabel>UF</FormLabel>
-                  <Input value={ufE} onChange={(e) => setUfE(e.target.value)} />
+                  <Input
+                    value={ufE}
+                    onChange={(e) => setUfE(e.target.value)}
+                    isReadOnly={!errorCepE}
+                    backgroundColor={cepE && !errorCepE && 'gray.100'}
+                  />
                 </FormControl>
               </Flex>
             </Flex>
@@ -279,7 +328,7 @@ const SignUp = () => {
         </Flex>
 
         <Flex justifyContent="center" marginTop={12}>
-          <Button onClick={handleSignUp} colorScheme="teal">
+          <Button isDisabled={isButtonDisabled} onClick={handleSignUp} colorScheme="teal">
             Criar seu cadastro
           </Button>
         </Flex>
@@ -293,7 +342,7 @@ const SignUp = () => {
             textDecoration="underline"
             cursor="pointer"
             fontWeight="bold"
-            onClick={() => console.log('login')}
+            onClick={goToLogin}
           >
             Entrar
           </Text>
