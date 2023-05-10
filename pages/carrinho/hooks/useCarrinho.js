@@ -72,8 +72,6 @@ const useCarrinho = ({ reload, setReload }) => {
       getAllclients().then((res) => {
         const clientList = res?.data
 
-        console.log({ clientList })
-
         const client = clientList.find((client) => {
           return client.id === Number(localStorage.getItem('id'))
         })
@@ -91,6 +89,10 @@ const useCarrinho = ({ reload, setReload }) => {
         sumProductsCart,
     )
   }, [freteValue, sumProductsCart])
+
+  useEffect(() => {
+    localStorage.setItem('totalCompra', totalValue)
+  }, [totalValue])
 
   return {
     freteValue,
