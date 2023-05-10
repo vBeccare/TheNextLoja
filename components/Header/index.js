@@ -16,8 +16,7 @@ import styles from './style.module.css'
 import useLocal from '../../hooks/useLocal'
 import useHeader from './hooks/useHeader'
 
-const Header = ({reload, setReload}) => {
-  const { isAdmin } = useLocal()
+const Header = ({ reload, setReload, hasFilter = true }) => {
   const {
     isLogged,
     clientName,
@@ -25,8 +24,12 @@ const Header = ({reload, setReload}) => {
     handleSignUp,
     handleSignIn,
     handleModify,
-    handleLogout
-  } = useHeader({reload, setReload})
+    handleLogout,
+    handleRequests,
+    handleCart,
+    cartItems,
+    totalItems
+  } = useHeader({ reload, setReload })
 
   return (
     <Box
@@ -59,7 +62,7 @@ const Header = ({reload, setReload}) => {
           <Input
             color="white"
             placeholder=""
-            disabled
+            disabled={!hasFilter}
             maxWidth="400px"
             size="md"
             type="search"
@@ -105,18 +108,18 @@ const Header = ({reload, setReload}) => {
 
           {isLogged && (
             <MenuList>
+              <MenuItem onClick={handleRequests}>Meus pedidos</MenuItem>
               <MenuItem onClick={handleModify}>Alterar cadastro</MenuItem>
               <MenuItem onClick={handleLogout}>Sair</MenuItem>
             </MenuList>
           )}
         </Menu>
-        <Image
-          cursor="not-allowed"
-          opacity={0.8}
-          marginLeft="auto"
-          boxSize="50px"
-          src="/carrinho.png"
-        />
+        <div className={styles.cartWrapper} onClick={handleCart}>
+          <Image marginLeft="auto" boxSize="52px" src="/carrinho.png" />
+          {cartItems?.length > 0 && (
+            <span className={styles.cart}>{totalItems}</span>
+          )}
+        </div>
       </Box>
       <Box></Box>
     </Box>

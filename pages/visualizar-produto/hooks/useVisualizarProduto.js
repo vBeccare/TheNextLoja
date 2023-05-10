@@ -3,10 +3,11 @@ import { getProductByUuid } from '../../../services/product'
 import { useRouter } from 'next/router'
 import { getMoneyMask } from '../../../utils/formatters'
 
-const useVisualizarProduto = () => {
+const useVisualizarProduto = ({ reload, setReload }) => {
   const route = useRouter()
   const [nome, setNome] = useState()
   const [descricao, setDescricao] = useState()
+  const [id, setId] = useState()
   const [preco, setPreco] = useState()
   const [avaliacao, setAvaliacao] = useState()
   const [currentImage, setCurrentImage] = useState(0)
@@ -26,6 +27,41 @@ const useVisualizarProduto = () => {
     setImagePrincipalId(images.indexOf(currentImage))
   }
 
+  const handleAddProduct = () => {
+    const carrinho = JSON.parse(localStorage?.getItem('carrinho'))
+    const currentProduct = carrinho?.find((item) => item.id === id)
+    const currentProductIndex = carrinho?.findIndex((item) => item.id === id)
+    const othersProducts = carrinho?.filter((item) => item.id !== id)
+    if (currentProduct) {
+      currentProduct.qtd = currentProduct?.qtd + 1
+      currentProduct.totalValue = currentProduct?.qtd * preco
+    }
+    if (currentProduct) {
+      carrinho.splice(currentProductIndex, 1, currentProduct)
+      localStorage.setItem('carrinho', JSON.stringify(carrinho))
+    } else {
+      if (othersProducts) {
+        localStorage.setItem(
+          'carrinho',
+          JSON.stringify([
+            ...othersProducts,
+            { id, name: nome, value: preco, qtd: 1, totalValue: preco },
+          ]),
+        )
+      } else {
+        localStorage.setItem(
+          'carrinho',
+          JSON.stringify([
+            { id, name: nome, value: preco, qtd: 1, totalValue: preco },
+          ]),
+        )
+      }
+    }
+
+    setReload(true)
+    route.push('/carrinho')
+  }
+
   const openImageViewer = useCallback((index) => {
     setCurrentImage(index)
     setIsViewerOpen(true)
@@ -40,10 +76,12 @@ const useVisualizarProduto = () => {
     if (currentQuery) {
       getProductByUuid({ id: currentQuery }).then((res) => {
         const productInfo = res.data
-        setPreco(getMoneyMask(productInfo.preco, 'R$ ', 2))
+
+        setPreco(productInfo.preco)
         setNome(productInfo.name)
         setAvaliacao(productInfo.avaliacao)
         setDescricao(productInfo.descricao)
+        setId(productInfo.id)
         let imageArrayUrl = []
         let imageArray = []
         productInfo.imagem.map((image) => {
@@ -73,6 +111,8 @@ const useVisualizarProduto = () => {
     closeImageViewer,
     openImageViewer,
     imagePrincipalId,
+    id,
+    handleAddProduct,
     imagesUrl,
     avaliacao,
   }

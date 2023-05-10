@@ -4,6 +4,7 @@ import ImageViewer from 'react-simple-image-viewer'
 
 import useVisualizarProduto from './hooks/useVisualizarProduto'
 import Rating from '../../components/Rating'
+import { getMoneyMask } from '../../utils/formatters'
 
 const VisualizarProduto = ({ reload, setReload }) => {
   const {
@@ -18,9 +19,10 @@ const VisualizarProduto = ({ reload, setReload }) => {
     currentImage,
     closeImageViewer,
     openImageViewer,
+    handleAddProduct,
     imagePrincipalId,
     avaliacao,
-  } = useVisualizarProduto()
+  } = useVisualizarProduto({ reload, setReload })
 
   return (
     <Flex
@@ -79,9 +81,14 @@ const VisualizarProduto = ({ reload, setReload }) => {
           </Text>
           <Rating avaliacao={avaliacao} />
           <Text marginTop="26px" maxWidth="1200px" fontSize={25}>
-            {preco}
+            {getMoneyMask(preco, 'R$ ', 2)}
           </Text>
-          <Button marginTop="200px" colorScheme="teal" mb={2}>
+          <Button
+            marginTop="200px"
+            colorScheme="teal"
+            mb={2}
+            onClick={handleAddProduct}
+          >
             Comprar
           </Button>
         </Flex>

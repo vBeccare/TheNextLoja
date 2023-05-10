@@ -11,11 +11,14 @@ const useCadastro = ({ enderecoFa, enderecoEn }) => {
   const [confirmPassword, setConfirmPassword] = useState()
   const [birthDate, setBirthDate] = useState()
   const [gender, setGender] = useState()
+  const [successRegister, setSuccessRegister] = useState(false)
 
   const [cpf, setCpf] = useState()
   const [cpfValid, setCpfValid] = useState()
 
   const addressList = [enderecoFa, enderecoEn]
+
+  let addressCounter = 0
 
   const isCpfValid = (value) => {
     const cpfNumbers = value.replaceAll('.', '').replace('-', '')
@@ -55,13 +58,23 @@ const useCadastro = ({ enderecoFa, enderecoEn }) => {
 
         addressList.map((address) => {
           const payload = { ...address, cliente: { id: clientId } }
-          postAddress(payload).then(() => {
-            Router.push('/')
-          })
+          postAddress(payload)
+            .then(() => {
+              addressCounter = addressCounter + 1
+            })
+            .finally(() => {
+              if (addressCounter === 2) {
+                alert('Cadastro realizado com sucesso')
+                Router.push('/')
+              }
+              if (addressCounter === 0) {
+                alert('Falha ao cadastrar')
+              }
+            })
         })
       })
-      .finally(() => {
-        alert('Cadastro realizado com sucesso')
+      .catch(() => {
+        alert('Falha ao cadastrar')
       })
   }
 

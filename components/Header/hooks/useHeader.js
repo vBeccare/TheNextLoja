@@ -3,7 +3,12 @@ import { useEffect, useState } from 'react'
 
 const useHeader = ({ reload, setReload }) => {
   const [clientName, setClientName] = useState()
+  const [cartItems, setCartItems] = useState([])
   const [isLogged, setIsLogged] = useState()
+
+  const totalItems = cartItems?.reduce((acc, item) => {
+    return acc + item.qtd
+  }, 0)
 
   const handleHome = () => {
     Router.push('/')
@@ -17,8 +22,15 @@ const useHeader = ({ reload, setReload }) => {
     Router.push('/login')
   }
 
+  const handleCart = () => {
+    Router.push('/carrinho')
+  }
+
   const handleModify = () => {
     Router.push('/alterar-cadastro')
+  }
+  const handleRequests = () => {
+    Router.push('/meus-pedidos')
   }
 
   const handleLogout = () => {
@@ -29,6 +41,7 @@ const useHeader = ({ reload, setReload }) => {
   useEffect(() => {
     setClientName(localStorage.getItem('nome'))
     setIsLogged(localStorage.getItem('token'))
+    setCartItems(JSON.parse(localStorage.getItem('carrinho')))
     setReload(false)
   }, [reload])
 
@@ -38,8 +51,12 @@ const useHeader = ({ reload, setReload }) => {
     handleSignIn,
     handleModify,
     handleLogout,
+    handleCart,
     clientName,
+    handleRequests,
     isLogged,
+    cartItems,
+    totalItems
   }
 }
 

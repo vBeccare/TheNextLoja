@@ -25,7 +25,6 @@ import useEndereco from './hooks/useEndereco'
 import useModal from './hooks/useModal'
 
 const SignUp = ({ setReload, setReloadAddress, reloadAddress }) => {
-  console.log({setReloadAddress})
   const { initialChangeRef, finalChangeRef, isEditOpen, onClose, openModal } =
     useModal()
 

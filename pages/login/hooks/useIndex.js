@@ -1,5 +1,5 @@
 import { useToast } from '@chakra-ui/react'
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { clientLogin } from '../../../services/cliente'
 
@@ -9,6 +9,10 @@ const useIndex = () => {
 
   const toast = useToast()
 
+  const router = useRouter()
+
+  const hasRedirect = router.query.redirect
+
   const handleSignUp = (data) => {
     localStorage.setItem('token', data.token)
     localStorage.setItem('id', data.id)
@@ -17,7 +21,7 @@ const useIndex = () => {
     localStorage.setItem('cpf', data.cpf)
     localStorage.setItem('dataNascimento', data.dataNascimento)
     localStorage.setItem('genero', data.genero)
-    Router.push('/')
+    hasRedirect ? router.push('/carrinho') : router.push('/')
   }
 
   const handleChangeEmail = (event) => setEmail(event.target.value)
@@ -43,7 +47,7 @@ const useIndex = () => {
   }
 
   const goToSignUp = () => {
-    Router.push('/cadastrar')
+    router.push('/cadastrar')
   }
 
   return {
