@@ -63,7 +63,7 @@ const MyRequests = ({ reload, setReload }) => {
               borderRadius={8}
             >
               <Text>Status: {requestDetails?.status}</Text>
-              <Text>Data da compra: {requestDetails.date}</Text>
+              <Text>Data da compra: {requestDetails?.date}</Text>
               <Text>
                 Valor dos produtos: {getMoneyMask(handleSumProducts(), 'R$', 2)}
               </Text>

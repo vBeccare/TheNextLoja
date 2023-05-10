@@ -26,13 +26,14 @@ const Carrinho = ({ setReload, reload }) => {
     reload,
     setReload,
   })
-  console.log({ cartItems })
+
   const {
     freteValue,
     handleGenerateFrete,
     freteItems,
     validCep,
     setCep,
+    cep,
     freteSelected,
     setFreteSelected,
     sumProductsCart,
@@ -63,6 +64,9 @@ const Carrinho = ({ setReload, reload }) => {
             gap={8}
           >
             <Text fontSize={24}>Produtos</Text>
+            {cartItems?.length === 0 && (
+              <Text>Nenhum produto adicionado ao carrinho</Text>
+            )}
             {cartItems?.map(({ name, value, qtd, id, totalValue }, idx) => {
               return (
                 <Flex
@@ -96,6 +100,7 @@ const Carrinho = ({ setReload, reload }) => {
                   <Input
                     as={InputMask}
                     mask="*****-***"
+                    value={cep}
                     onChange={(e) => setCep(e.target.value)}
                   />
                 </FormControl>
@@ -152,6 +157,7 @@ const Carrinho = ({ setReload, reload }) => {
           <Button
             marginTop={8}
             colorScheme="teal"
+            isDisabled={cartItems.length === 0}
             onClick={handleFinishRequest}
           >
             Finalizar pedido

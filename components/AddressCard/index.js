@@ -14,6 +14,8 @@ const AddressCard = ({
   id,
   setReloadAddress,
   reloadAddress,
+  selectedAddress = false,
+  setSelectedAddress,
 }) => {
   const isFaturamento = tipo === 'F'
 
@@ -43,14 +45,14 @@ const AddressCard = ({
         CEP: {cep}
       </Text>
 
-      <Text>Endereço: {address}</Text>
-      <Text>Bairro: {bairro}</Text>
-      <Text>Número: {number}</Text>
-      <Text>Complemento: {complement}</Text>
-      <Text>Cidade: {city}</Text>
-      <Text>UF: {uf}</Text>
+      <Text minHeight={16}>Endereço: {address}</Text>
+      <Text minHeight={8}>Bairro: {bairro}</Text>
+      <Text minHeight={8}>Número: {number}</Text>
+      <Text minHeight={8}>Complemento: {complement ? complement : '-'}</Text>
+      <Text minHeight={8}>Cidade: {city}</Text>
+      <Text minHeight={8}>UF: {uf}</Text>
 
-      {!isFaturamento && (
+      {!isFaturamento && !selectedAddress && (
         <Flex gap={8} marginTop={8}>
           <Button
             colorScheme={'yellow'}
@@ -67,6 +69,17 @@ const AddressCard = ({
             Excluir
           </Button>
         </Flex>
+      )}
+
+      {selectedAddress && (
+        <Button
+          colorScheme={'teal'}
+          isDisabled={selectedAddress === id}
+          onClick={() => setSelectedAddress(id)}
+          marginTop={8}
+        >
+          Selecionar
+        </Button>
       )}
     </Flex>
   )

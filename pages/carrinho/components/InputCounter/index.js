@@ -22,7 +22,7 @@ const InputCounter = ({ defaultValue, handleUpdateQtd, id, handleRemoveItem }) =
         <Button {...dec} onClick={() => handleUpdateQtd(inputValue, id)}>
           -
         </Button>
-        <Input variant="filled" {...input} />
+        <Input isReadOnly variant="filled" {...input} />
         <Button {...inc} onClick={() => handleUpdateQtd(inputValue, id)}>
           +
         </Button>

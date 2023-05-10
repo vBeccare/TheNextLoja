@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import Router from 'next/router'
 import { getMoneyMask } from '../../../utils/formatters'
+import { getAllclients } from '../../../services/cliente'
 
 const useCarrinho = ({ reload, setReload }) => {
   const [freteSelected, setFreteSelected] = useState()
@@ -58,13 +59,31 @@ const useCarrinho = ({ reload, setReload }) => {
       return acc + item.totalValue
     }, 0)
     setSumProductsCart(sum)
+    setIsLogged(localStorage.getItem('token'))
   }, [reload])
 
   useEffect(() => {
     const frete = freteItems[Number(freteSelected)]?.value
     setFreteValue(frete)
-    setIsLogged(localStorage.getItem('token'))
   }, [freteSelected])
+
+  useEffect(() => {
+    if (isLogged) {
+      getAllclients().then((res) => {
+        const clientList = res?.data
+
+        console.log({ clientList })
+
+        const client = clientList.find((client) => {
+          return client.id === Number(localStorage.getItem('id'))
+        })
+
+        const clientCep = client.endereco.find((address) => address.padrao)?.cep
+        setCep(clientCep)
+      })
+      handleGenerateFrete()
+    }
+  }, [isLogged])
 
   useEffect(() => {
     setTotalValue(
@@ -82,6 +101,7 @@ const useCarrinho = ({ reload, setReload }) => {
     freteItems,
     setCep,
     validCep,
+    cep,
     sumProductsCart,
     totalValue,
     handleFinishRequest,
