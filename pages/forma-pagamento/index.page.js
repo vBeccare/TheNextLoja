@@ -20,7 +20,7 @@ import FreteItem from './components/FreteItem'
 import useCarrinho from './hooks/useCarrinho'
 import { getMoneyMask } from '../../utils/formatters'
 
-const Carrinho = ({ setReload, reload }) => {
+const Carrinho = ({ setReload, reload, number= 12353 }) => {
   const { cartArray } = useInputCounter()
   const {
     freteValue,
@@ -99,7 +99,7 @@ const Carrinho = ({ setReload, reload }) => {
           <Button
             marginTop={8}
             colorScheme="teal"
-            onClick={handleFinishRequest}
+            onClick={() =>handleFinishRequest(number)}
           >
             Revisar pedido
           </Button>

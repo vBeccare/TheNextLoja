@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import Router from 'next/router'
 import { getMoneyMask } from '../../../utils/formatters'
+import { useRouter } from 'next/router'
 
 const useCarrinho = () => {
   const [freteSelected, setFreteSelected] = useState()
   const [freteItems, setFreteItems] = useState([])
   const [cep, setCep] = useState('')
+  
 
   const [freteValue, setFreteValue] = useState()
   const [sumProductsCart, setSumProductsCart] = useState(1000)
@@ -47,8 +49,10 @@ const useCarrinho = () => {
     setFreteSelected('0')
   }
 
-  const handleFinishRequest = () => {
-    isLogged ? Router.push('/endereço') : Router.push('/login')
+  const router = useRouter()
+
+  const handleFinishRequest = (requestNumber) => {
+    router.push(`/resumos?request=${requestNumber}`)
   }
 
   useEffect(() => {
