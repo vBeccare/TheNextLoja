@@ -1,42 +1,60 @@
 import {
   Flex,
-  HStack,
   Button,
   Input,
   Text,
-  RadioGroup,
-  Stack,
-  Radio,
   FormControl,
   FormLabel,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  FormErrorMessage,
+  ModalFooter,
 } from '@chakra-ui/react'
 
 import InputMask from 'react-input-mask'
 
 import HeaderSimple from '../../components/HeaderSimple'
 
-import useInputCounter from './hooks/useInputCounter'
 import useEndereco from './hooks/useEndereco'
-import useCarrinho from './hooks/useCarrinho'
-import FreteItem from './components/FreteItem'
-import { getMoneyMask } from '../../utils/formatters'
+import useEnderecoData from './hooks/useEnderecoData'
+import AddressCard from '../../components/AddressCard'
+import useModal from './hooks/useModal'
 
-const Carrinho = ({ setReload, reload }) => {
-  const { cartArray } = useInputCounter()
+const Carrinho = ({ setReload, reload, setReloadAddress, reloadAddress }) => {
+  const { initialChangeRef, finalChangeRef, isEditOpen, onClose, openModal } =
+    useModal()
   const {
-    freteValue,
-    handleGenerateFrete,
-    freteItems,
-    validCep,
-    setCep,
-    freteSelected,
-    setFreteSelected,
-    sumProductsCart,
-    totalValue,
-    handleFinishRequest,
-  } = useCarrinho()
+    handlePaymentMethod,
+    addressList,
+    selectedAddress,
+    setSelectedAddress,
+    getAddressList,
+  } = useEndereco({ setReloadAddress, reloadAddress })
 
-  const { handlePaymentMethod } = useEndereco()
+  const {
+    handleNewAddress,
+
+    errorCepE,
+    enderecoEn,
+    setCepE,
+    cepE,
+    setLogradouroE,
+    setBairroE,
+    setCityE,
+    setUfE,
+    setNumberE,
+    setComplementE,
+    logradouroE,
+    numberE,
+    complementE,
+    bairroE,
+    cityE,
+    ufE,
+  } = useEnderecoData({ onClose, getAddressList })
 
   return (
     <Flex flexDirection="column">
@@ -60,7 +78,129 @@ const Carrinho = ({ setReload, reload }) => {
             borderRadius={8}
             gap={8}
           >
-            <Text fontSize={24}>Selecione o endereço de entrega</Text>
+            <Flex justifyContent="space-between">
+              <Text fontSize={24}>Selecione o endereço de entrega</Text>
+              <Button colorScheme="teal" onClick={openModal}>Adicionar novo</Button>
+            </Flex>
+            <Flex gap={8} overflowX="scroll" maxWidth="80vw" padding={4}>
+              {addressList.map((address) => {
+                return (
+                  <AddressCard
+                    bairro={address.bairro}
+                    cep={address.cep}
+                    address={address.endereco}
+                    number={address.numero}
+                    complement={address.complemento}
+                    city={address.cidade}
+                    uf={address.uf}
+                    isDefault={address.padrao}
+                    tipo={address.tipo}
+                    id={address.id}
+                    selectedAddress={selectedAddress}
+                    setSelectedAddress={setSelectedAddress}
+                    setReloadAddress={setReloadAddress}
+                    reloadAddress={reloadAddress}
+                  />
+                )
+              })}
+            </Flex>
+            <Modal
+              initialFocusRef={initialChangeRef}
+              finalFocusRef={finalChangeRef}
+              isOpen={isEditOpen}
+              size="xl"
+              onClose={onClose}
+            >
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Novo endereço</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody pb={6}>
+                  <Flex>
+                    <FormControl isInvalid={false}>
+                      <FormLabel>CEP</FormLabel>
+                      <Input
+                        as={InputMask}
+                        mask="*****-***"
+                        onChange={(e) => setCepE(e.target.value)}
+                      />
+                      <FormErrorMessage>
+                        Digite seu nome completo
+                      </FormErrorMessage>
+                    </FormControl>
+                  </Flex>
+
+                  <Flex gap={8} marginTop={4}>
+                    <FormControl isInvalid={false}>
+                      <FormLabel>Endereço</FormLabel>
+                      <Input
+                        value={logradouroE}
+                        onChange={(e) => setLogradouroE(e.target.value)}
+                        isReadOnly={!errorCepE}
+                        backgroundColor={cepE && !errorCepE && 'gray.100'}
+                      />
+                    </FormControl>
+
+                    <FormControl isInvalid={false}>
+                      <FormLabel>Bairro</FormLabel>
+                      <Input
+                        value={bairroE}
+                        onChange={(e) => setBairroE(e.target.value)}
+                        isReadOnly={!errorCepE}
+                        backgroundColor={cepE && !errorCepE && 'gray.100'}
+                      />
+                    </FormControl>
+                  </Flex>
+
+                  <Flex gap={8} marginTop={4}>
+                    <FormControl isInvalid={false}>
+                      <FormLabel>Numero</FormLabel>
+                      <Input
+                        value={numberE}
+                        onChange={(e) => setNumberE(e.target.value)}
+                      />
+                    </FormControl>
+
+                    <FormControl isInvalid={false}>
+                      <FormLabel>Complemento</FormLabel>
+                      <Input
+                        value={complementE}
+                        onChange={(e) => setComplementE(e.target.value)}
+                      />
+                    </FormControl>
+                  </Flex>
+
+                  <Flex gap={8} marginTop={4}>
+                    <FormControl isInvalid={false}>
+                      <FormLabel>Cidade</FormLabel>
+                      <Input
+                        value={cityE}
+                        onChange={(e) => setCityE(e.target.value)}
+                        isReadOnly={!errorCepE}
+                        backgroundColor={cepE && !errorCepE && 'gray.100'}
+                      />
+                    </FormControl>
+
+                    <FormControl isInvalid={false}>
+                      <FormLabel>UF</FormLabel>
+                      <Input
+                        value={ufE}
+                        onChange={(e) => setUfE(e.target.value)}
+                        isReadOnly={!errorCepE}
+                        backgroundColor={cepE && !errorCepE && 'gray.100'}
+                      />
+                    </FormControl>
+                  </Flex>
+                </ModalBody>
+
+                <ModalFooter>
+                  <Button colorScheme="teal" mr={3} onClick={handleNewAddress}>
+                    Salvar
+                  </Button>
+                  <Button onClick={onClose}>Cancelar</Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
           </Flex>
 
           <Flex maxWitdh={100} justifyContent="flex-end">
