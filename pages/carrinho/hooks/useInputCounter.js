@@ -22,8 +22,9 @@ const useInputCounter = ({ reload, setReload }) => {
     const carrinho = JSON.parse(localStorage?.getItem('carrinho'))
     const currentProductIndex = carrinho.findIndex((item) => item.id === id)
     if (currentProductIndex > -1) {
+      //remove um item do array
       carrinho.splice(currentProductIndex, 1)
-      localStorage.setItem('carrinho', JSON.stringify([...carrinho]))
+      localStorage.setItem('carrinho', JSON.stringify([...carrinho]))//set carrinho atualizado
 
       setReload(true)
     }

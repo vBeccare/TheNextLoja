@@ -97,6 +97,7 @@ const Carrinho = ({ setReload, reload, setReloadAddress, reloadAddress }) => {
                     tipo={address.tipo}
                     id={address.id}
                     selectedAddress={selectedAddress}
+                    isSelectedMode
                     setSelectedAddress={setSelectedAddress}
                     setReloadAddress={setReloadAddress}
                     reloadAddress={reloadAddress}

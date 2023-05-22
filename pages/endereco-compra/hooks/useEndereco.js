@@ -24,6 +24,7 @@ const useEndereco = ({ reloadAddress, setReloadAddress }) => {
       )
 
       setAddressList(clientFilteredAddressList)
+
       setSelectedAddress(clientFilteredAddressList[0].id)
     })
   }
@@ -43,7 +44,7 @@ const useEndereco = ({ reloadAddress, setReloadAddress }) => {
     setReloadAddress,
     setSelectedAddress,
     reloadAddress,
-		getAddressList
+    getAddressList,
   }
 }
 

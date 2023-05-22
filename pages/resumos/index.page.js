@@ -6,8 +6,18 @@ import useRequestDetails from './hooks/useRequestDetails'
 import { getMoneyMask } from '../../utils/formatters'
 
 const Pedidos = ({ reload, setReload }) => {
-  const { requestNumber, handleSumProducts, cartArray, requestDetails, isButtonDisabled,  handleFinishRequest, handleReturnPayment, } =
-    useRequestDetails()
+  const {
+    cart,
+    totalCompra,
+    address,
+    paymentMethod,
+    paymentDetails,
+    sumProductsCart,
+    frete,
+    isButtonDisabled,
+    handleFinishRequest,
+    handleReturnPayment,
+  } = useRequestDetails()
   return (
     <Flex
       height="100vh"
@@ -23,7 +33,7 @@ const Pedidos = ({ reload, setReload }) => {
           color="teal.400"
           textAlign="center"
         >
-          Pedido #{requestNumber}
+          Resumo
         </Text>
         <Flex gap={8} marginTop={8} marginX={16}>
           <Flex
@@ -35,33 +45,44 @@ const Pedidos = ({ reload, setReload }) => {
             gap={8}
           >
             <Text fontSize={24}>Produtos</Text>
-            {cartArray?.map(({ name, value, qtd }, idx) => {
+            {cart?.map(({ name, value, qtd }, idx) => {
               return (
                 <Flex
                   key={idx}
                   justifyContent="space-between"
+                  gap={8}
                   paddingRight={16}
                 >
-                  <Text>{name}</Text>
+                  <Text minWidth={180} maxWidth={180}>
+                    {name}
+                  </Text>
 
-                  <Text>valor: {getMoneyMask(value, 'R$', 2)}</Text>
-                  <Text>quantidade: {qtd}</Text>
-                  <Text>valor total: {getMoneyMask(value * qtd, 'R$', 2)}</Text>
+                  <Text minWidth={100} maxWidth={100}>
+                    Valor: {getMoneyMask(value, 'R$', 2)}
+                  </Text>
+                  <Text>Quantidade: {qtd}</Text>
+                  <Text>Valor total: {getMoneyMask(value * qtd, 'R$', 2)}</Text>
                 </Flex>
               )
             })}
 
-            <Flex justifyContent="center" marginTop={100}>
-              <Button isDisabled={isButtonDisabled} onClick={handleReturnPayment} colorScheme="blue">
+            <Flex justifyContent="center" gap={16} marginTop={100}>
+              <Button
+                isDisabled={isButtonDisabled}
+                onClick={handleReturnPayment}
+                colorScheme="blue"
+              >
                 Voltar
               </Button>
 
-
-              <Button isDisabled={isButtonDisabled} onClick={handleFinishRequest} colorScheme="teal">
+              <Button
+                isDisabled={isButtonDisabled}
+                onClick={handleFinishRequest}
+                colorScheme="teal"
+              >
                 Finalizar Compra
               </Button>
             </Flex>
-
           </Flex>
 
           <Flex flexDirection="column">
@@ -74,15 +95,18 @@ const Pedidos = ({ reload, setReload }) => {
               flexDirection="column"
               borderRadius={8}
             >
-              <Text>Forma de Pagamento: {requestDetails?.pagamento}</Text>
-              <Text>Endereço de Entrega: {requestDetails?.endereco}</Text>
-              <Text>Nº: {requestDetails?.numero}</Text>
               <Text>
-                Valor dos produtos: {getMoneyMask(handleSumProducts(), 'R$', 2)}
+                Forma de Pagamento:{' '}
+                {paymentMethod === 'credit' ? 'Cartão de crédito' : 'Boleto'}
               </Text>
-              <Text>Frete: {getMoneyMask(20, 'R$', 2)}</Text>
+              <Text>Endereço de Entrega: {address?.endereco}</Text>
+              <Text>Nº: {address?.numero}</Text>
+              <Text>
+                Valor dos produtos: {getMoneyMask(sumProductsCart, 'R$', 2)}
+              </Text>
+              <Text>Frete: {getMoneyMask(frete, 'R$', 2)}</Text>
               <Text backgroundColor="gray.100" padding={2} borderRadius={8}>
-                Total: {getMoneyMask(handleSumProducts() + 20, 'R$', 2)}
+                Total: {getMoneyMask(totalCompra, 'R$', 2)}
               </Text>
             </Flex>
           </Flex>

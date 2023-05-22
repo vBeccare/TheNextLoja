@@ -41,7 +41,7 @@ const Header = ({ reload, setReload, hasFilter = true }) => {
       bgColor="teal.500"
     >
       <Image
-        boxSize="100px"
+        boxSize="120px"
         cursor="pointer"
         src="/logoadm.png"
         onClick={handleHome}
@@ -89,7 +89,7 @@ const Header = ({ reload, setReload, hasFilter = true }) => {
                 fontSize="12px"
                 marginLeft="8px"
                 fontWeight="bold"
-                minWidth="100px"
+                minWidth="120px"
                 color="white"
               >
                 {isLogged
@@ -115,7 +115,7 @@ const Header = ({ reload, setReload, hasFilter = true }) => {
           )}
         </Menu>
         <div className={styles.cartWrapper} onClick={handleCart}>
-          <Image marginLeft="auto" boxSize="52px" src="/carrinho.png" />
+          <Image marginLeft="auto" boxSize="48px" src="/carrinho.png" />
           {cartItems?.length > 0 && (
             <span className={styles.cart}>{totalItems}</span>
           )}

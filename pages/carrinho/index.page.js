@@ -157,7 +157,7 @@ const Carrinho = ({ setReload, reload }) => {
           <Button
             marginTop={8}
             colorScheme="teal"
-            isDisabled={cartItems.length === 0}
+            isDisabled={cartItems?.length === 0 || cartItems === null}
             onClick={handleFinishRequest}
           >
             Finalizar pedido

@@ -14,7 +14,8 @@ const AddressCard = ({
   id,
   setReloadAddress,
   reloadAddress,
-  selectedAddress = false,
+  selectedAddress,
+  isSelectedMode = false,
   setSelectedAddress,
 }) => {
   const isFaturamento = tipo === 'F'
@@ -52,7 +53,7 @@ const AddressCard = ({
       <Text minHeight={8}>Cidade: {city}</Text>
       <Text minHeight={8}>UF: {uf}</Text>
 
-      {!isFaturamento && !selectedAddress && (
+      {!isFaturamento && !isSelectedMode && (
         <Flex gap={8} marginTop={8}>
           <Button
             colorScheme={'yellow'}
@@ -71,7 +72,7 @@ const AddressCard = ({
         </Flex>
       )}
 
-      {selectedAddress && (
+      {isSelectedMode && (
         <Button
           colorScheme={'teal'}
           isDisabled={selectedAddress === id}

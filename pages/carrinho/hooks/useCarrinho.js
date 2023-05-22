@@ -92,6 +92,7 @@ const useCarrinho = ({ reload, setReload }) => {
 
   useEffect(() => {
     localStorage.setItem('totalCompra', totalValue)
+    localStorage.setItem('frete',  parseFloat(freteValue?.replace('R$ ', '').replace(',', '.')))
   }, [totalValue])
 
   return {

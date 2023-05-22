@@ -25,6 +25,16 @@ const Carrinho = ({ setReload, reload, number = 12353 }) => {
     setPaymentMethod,
     handleFinishRequest,
     installmentsList,
+    cardNumber,
+    setCardNumber,
+    cardName,
+    setCardName,
+    cardDate,
+    setCardDate,
+    cardCvv,
+    setCardCvv,
+    installments,
+    setInstallments,
   } = usePaymentMethod()
 
   return (
@@ -63,21 +73,35 @@ const Carrinho = ({ setReload, reload, number = 12353 }) => {
 
                     <Input
                       as={InputMask}
+                      value={cardNumber}
                       mask="9999 9999 9999 9999"
-                      onChange={(e) => {}}
+                      onChange={(e) => {
+                        setCardNumber(e.target.value)
+                      }}
                     />
                   </FormControl>
                   <FormControl id="card-number">
                     <FormLabel>código verificador</FormLabel>
 
-                    <Input maxWidth={40} onChange={(e) => {}} />
+                    <Input
+                      maxWidth={40}
+                      value={cardCvv}
+                      onChange={(e) => {
+                        setCardCvv(e.target.value)
+                      }}
+                    />
                   </FormControl>
                 </Flex>
                 <Flex gap={8}>
                   <FormControl id="card-number">
                     <FormLabel>Nome completo</FormLabel>
 
-                    <Input onChange={(e) => {}} />
+                    <Input
+                      value={cardName}
+                      onChange={(e) => {
+                        setCardName(e.target.value)
+                      }}
+                    />
                   </FormControl>
                   <FormControl id="card-number">
                     <FormLabel>Data vencimento</FormLabel>
@@ -85,8 +109,11 @@ const Carrinho = ({ setReload, reload, number = 12353 }) => {
                     <Input
                       maxWidth={40}
                       as={InputMask}
+                      value={cardDate}
                       mask="99/99"
-                      onChange={(e) => {}}
+                      onChange={(e) => {
+                        setCardDate(e.target.value)
+                      }}
                     />
                   </FormControl>
                 </Flex>
@@ -94,7 +121,11 @@ const Carrinho = ({ setReload, reload, number = 12353 }) => {
                   <FormControl id="card-number">
                     <FormLabel>Parcelas</FormLabel>
 
-                    <Select>
+                    <Select
+                      onChange={(e) => {
+                        setInstallments(e.target.value)
+                      }}
+                    >
                       {installmentsList.map((installment) => {
                         return (
                           <option value={installment.value}>
