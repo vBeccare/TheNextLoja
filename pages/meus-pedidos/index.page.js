@@ -2,9 +2,38 @@ import { Flex, Text } from '@chakra-ui/react'
 
 import Header from '../../components/Header'
 import RequestItem from './components/RequestItem'
-import { requests } from './constants'
+import { getAllRequests } from '../../services/orders'
+import { useEffect, useState } from 'react'
 
 const MyRequests = ({ reload, setReload }) => {
+  const [orderList, setOrderList] = useState([])
+  const [clientId, setClientId] = useState()
+
+  const handleRequestDetails = () => {
+    getAllRequests().then((res) => {
+      const orderList = res.data
+
+      const filteredOrderList = orderList.filter(
+        (order) => order?.cliente?.id === clientId,
+      )
+
+      const formattedOrderList = filteredOrderList.map((order) => ({
+        number: order.id,
+        date: order.data,
+        totalValue: order.totalGeral,
+        status: order.status,
+      }))
+
+      setOrderList(formattedOrderList)
+    })
+  }
+
+  useEffect(() => {
+    setClientId(Number(localStorage.getItem('id')))
+    if (clientId) {
+      handleRequestDetails()
+    }
+  }, [clientId])
   return (
     <Flex
       height="100vh"
@@ -23,7 +52,7 @@ const MyRequests = ({ reload, setReload }) => {
           Meus pedidos
         </Text>
         <Flex gap={8} marginTop={8} marginX={16} flexDirection="column">
-          {requests.map(({ status, number, totalValue, date }) => {
+          {orderList.map(({ status, number, totalValue, date }) => {
             return (
               <RequestItem
                 status={status}

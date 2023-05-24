@@ -3,11 +3,13 @@ import { requests } from '../constants'
 import Router from 'next/router'
 import { useEffect, useState } from 'react'
 import { getAllclients } from '../../../services/cliente'
+import { postItemCart, postCart } from '../../../services/orders'
 
 const useRequestDetails = () => {
   const router = useRouter()
 
   const [cart, setCart] = useState([])
+  const [clientId, setClientId] = useState()
   const [totalCompra, setTotalCompra] = useState(0)
   const [frete, setFrete] = useState(0)
   const [address, setAddress] = useState()
@@ -27,6 +29,7 @@ const useRequestDetails = () => {
       const clientList = res?.data
 
       const client = clientList.find((client) => {
+        setClientId(Number(localStorage.getItem('id')))
         return client.id === Number(localStorage.getItem('id'))
       })
 
@@ -49,27 +52,42 @@ const useRequestDetails = () => {
     setCart(cart)
   }, [])
 
+  const cartItems = cart.map((item) => ({
+    id: item.id,
+    quantidade: item.qtd,
+    valorUnitario: item.value,
+    nome: item.name,
+  }))
+
   const payload = {
     nome: paymentDetails?.cardName,
     numeroCartao: paymentDetails?.cardNumber,
     dataVencimento: paymentDetails?.cardDate,
     codigo: paymentDetails?.cardCvv,
-    parcelas: paymentDetails?.installments,
-    enderecoEntrega: address?.endereco,
+    parcelas: Number(paymentDetails?.installments),
+    endereçoEntrega: address?.endereco,
     valorTotal: sumProductsCart,
-    totalGeral: totalCompra,
+    totalGeral: parseFloat(totalCompra),
     pagamento: paymentMethod === 'bank-slip' ? 1 : 2,
     frete: frete,
-    produto: cart.map((item) => ({
-      id: item.id,
-      quantidade: item.qtd,
-    })),
+    cliente: { id: clientId },
   }
 
   const handleFinishRequest = () => {
-    //enviar para o backend
+    cartItems.map((item) => {
+      postItemCart(item)
+    })
 
-    Router.push('/meus-pedidos')
+    setTimeout(() => {
+      postCart(payload)
+        .then(() => {
+          localStorage.removeItem('carrinho')
+          Router.push('/meus-pedidos')
+        })
+        .catch(() => {
+          alert('Falha ao realizar a compra')
+        })
+    }, 1500)
   }
 
   const handleReturnPayment = () => {

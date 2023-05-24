@@ -1,26 +1,52 @@
 import { useRouter } from 'next/router'
 import { requests } from '../../constants'
+import { useEffect, useState } from 'react'
+import { getAllItems, getAllRequests } from '../../../../services/orders'
 
 const useRequestDetails = () => {
+  const [order, setOrder] = useState([])
+  const [orderItems, setOrderItems] = useState([])
+  const [clientId, setClientId] = useState()
+
   const router = useRouter()
   const requestNumber = router.query.request
 
-  const requestDetails = requests.find((item) => item.number === requestNumber)
-  const cartArray = requestDetails?.products
+  const handleRequestDetails = () => {
+    getAllRequests().then((res) => {
+      const orderList = res.data
+      const currentOrder = orderList.find(
+        (order) => order?.id === Number(requestNumber),
+      )
 
-  const handleSumProducts = () => {
-    const sum = cartArray?.reduce((acc, item) => {
-      return acc + item.value * item.qtd
-    }, 0)
+      setOrder(currentOrder)
 
-    return sum
+      getAllItems().then((res) => {
+        const itemsList = res.data
+
+        const currentOrderItems = itemsList.filter(
+          (item) => item?.codigo === currentOrder?.codigoItem,
+        )
+
+        const formattedCurrentOrderItems = currentOrderItems.map((item) => ({
+          id: item.id,
+          name: item.nome,
+          value: item.valorUnitario,
+          qtd: item.quantidade,
+        }))
+
+        setOrderItems(formattedCurrentOrderItems)
+      })
+    })
   }
+
+  useEffect(() => {
+    handleRequestDetails()
+  }, [])
 
   return {
     requestNumber,
-    handleSumProducts,
-    requestDetails,
-    cartArray,
+    order,
+    orderItems,
   }
 }
 

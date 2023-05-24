@@ -6,8 +6,7 @@ import useRequestDetails from './hooks/useRequestDetails'
 import { getMoneyMask } from '../../../utils/formatters'
 
 const MyRequests = ({ reload, setReload }) => {
-  const { requestNumber, handleSumProducts, cartArray, requestDetails } =
-    useRequestDetails()
+  const { requestNumber, order, orderItems } = useRequestDetails()
   return (
     <Flex
       height="100vh"
@@ -35,7 +34,7 @@ const MyRequests = ({ reload, setReload }) => {
             gap={8}
           >
             <Text fontSize={24}>Produtos</Text>
-            {cartArray?.map(({ name, value, qtd }, idx) => {
+            {orderItems?.map(({ name, value, qtd }, idx) => {
               return (
                 <Flex
                   key={idx}
@@ -62,14 +61,14 @@ const MyRequests = ({ reload, setReload }) => {
               flexDirection="column"
               borderRadius={8}
             >
-              <Text>Status: {requestDetails?.status}</Text>
-              <Text>Data da compra: {requestDetails?.date}</Text>
+              <Text>Status: {order?.status}</Text>
+              <Text>Data da compra: {order?.dataCompra}</Text>
               <Text>
-                Valor dos produtos: {getMoneyMask(handleSumProducts(), 'R$', 2)}
+                Valor dos produtos: {getMoneyMask(order?.valorTotal, 'R$', 2)}
               </Text>
               <Text>Frete: {getMoneyMask(20, 'R$', 2)}</Text>
               <Text backgroundColor="gray.100" padding={2} borderRadius={8}>
-                Total: {getMoneyMask(handleSumProducts() + 20, 'R$', 2)}
+                Total: {getMoneyMask(order?.totalGeral, 'R$', 2)}
               </Text>
             </Flex>
           </Flex>
