@@ -38,7 +38,7 @@ const Carrinho = ({ setReload, reload, number = 12353 }) => {
   } = usePaymentMethod()
 
   return (
-    <Flex flexDirection="column">
+    <Flex flexDirection="column" marginBottom={8}>
       <HeaderSimple />
       <Text
         fontSize={32}
@@ -50,8 +50,17 @@ const Carrinho = ({ setReload, reload, number = 12353 }) => {
         Forma de pagamento
       </Text>
 
-      <Flex marginTop={16} paddingX={16} gap={16}>
-        <Flex minWidth={800} gap={8} flexDirection="column">
+      <Flex
+        marginTop={16}
+        paddingX={{ base: '2%', md: '16' }}
+        gap={16}
+        flexDirection={{ base: 'column', md: 'row' }}
+      >
+        <Flex
+          minWidth={{ base: '200px', md: '800' }}
+          gap={8}
+          flexDirection="column"
+        >
           <Flex
             flexDirection="column"
             backgroundColor="gray.300"
@@ -60,14 +69,14 @@ const Carrinho = ({ setReload, reload, number = 12353 }) => {
             gap={8}
           >
             <RadioGroup onChange={setPaymentMethod} value={paymentMethod}>
-              <Stack direction="row">
+              <Stack direction={{ base: 'column', md: 'row' }}>
                 <Radio value="bank-slip">Boleto</Radio>
                 <Radio value="credit">Cartão de crédito</Radio>
               </Stack>
             </RadioGroup>
             {paymentMethod === 'credit' && (
               <Flex gap={8} flexDirection="column">
-                <Flex gap={8}>
+                <Flex gap={8} flexDirection={{ base: 'column', md: 'row' }}>
                   <FormControl id="card-number">
                     <FormLabel>Número do cartão</FormLabel>
 
@@ -84,7 +93,7 @@ const Carrinho = ({ setReload, reload, number = 12353 }) => {
                     <FormLabel>código verificador</FormLabel>
 
                     <Input
-                      maxWidth={40}
+                      maxWidth={{ base: '100%', md: '40' }}
                       value={cardCvv}
                       onChange={(e) => {
                         setCardCvv(e.target.value)
@@ -92,7 +101,7 @@ const Carrinho = ({ setReload, reload, number = 12353 }) => {
                     />
                   </FormControl>
                 </Flex>
-                <Flex gap={8}>
+                <Flex gap={8} flexDirection={{ base: 'column', md: 'row' }}>
                   <FormControl id="card-number">
                     <FormLabel>Nome completo</FormLabel>
 
@@ -107,7 +116,7 @@ const Carrinho = ({ setReload, reload, number = 12353 }) => {
                     <FormLabel>Data vencimento</FormLabel>
 
                     <Input
-                      maxWidth={40}
+                      maxWidth={{ base: '100%', md: '40' }}
                       as={InputMask}
                       value={cardDate}
                       mask="99/99"

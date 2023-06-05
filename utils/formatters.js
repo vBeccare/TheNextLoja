@@ -16,6 +16,17 @@ export const currencyToFloat = (val = '') => {
   }
 }
 
+export const formattedDate = (val = '') => {
+  if (val === '') return val
+  var partes = val.split('-')
+  var ano = partes[0]
+  var mes = partes[1]
+  var dia = partes[2]
+  var dataFormatada = dia + '/' + mes + '/' + ano
+
+  return dataFormatada
+}
+
 export const getMoneyMask = (value = '', prefix = 'R$', decimals) => {
   if (value === '') return value
 

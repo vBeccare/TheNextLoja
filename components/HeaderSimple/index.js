@@ -23,7 +23,7 @@ const HeaderSimple = () => {
       display="flex"
       width="100%"
       alignItems="center"
-      paddingX="160px"
+      paddingX={{ base: '16px', md: '160px' }}
       h="120px"
       bgColor="teal.500"
     >
@@ -31,6 +31,7 @@ const HeaderSimple = () => {
         boxSize="100px"
         cursor="pointer"
         src="/logoadm.png"
+        alt="logo"
         onClick={handleHome}
       />
       <Box></Box>

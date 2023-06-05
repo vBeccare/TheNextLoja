@@ -54,7 +54,12 @@ const Carrinho = ({ setReload, reload }) => {
         Carrinho
       </Text>
 
-      <Flex marginTop={16} paddingX={16} gap={16}>
+      <Flex
+        flexDirection={{ base: 'column', md: 'row' }}
+        marginTop={16}
+        paddingX={16}
+        gap={16}
+      >
         <Flex flex={1} gap={8} flexDirection="column">
           <Flex
             flexDirection="column"
@@ -64,7 +69,7 @@ const Carrinho = ({ setReload, reload }) => {
             gap={8}
           >
             <Text fontSize={24}>Produtos</Text>
-            {cartItems?.length === 0 && (
+            {(cartItems?.length === 0 || cartItems === null) && (
               <Text>Nenhum produto adicionado ao carrinho</Text>
             )}
             {cartItems?.map(({ name, value, qtd, id, totalValue }, idx) => {
@@ -72,9 +77,15 @@ const Carrinho = ({ setReload, reload }) => {
                 <Flex
                   key={idx}
                   justifyContent="space-between"
-                  paddingRight={16}
+                  flexDirection={{ base: 'column', md: 'row' }}
+                  minWidth={{ base: '150px', md: '100%' }}
+                  paddingRight={{ base: 0, md: 16 }}
+                  gap={{ base: 8, md: 0 }}
                 >
-                  <Text minWidth={240} maxWidth={350}>
+                  <Text
+                    minWidth={{ base: '180px', md: '240px' }}
+                    maxWidth={350}
+                  >
                     {name}
                   </Text>
 
@@ -85,7 +96,10 @@ const Carrinho = ({ setReload, reload }) => {
                     id={id}
                   />
 
-                  <Text minWidth={100} textAlign="end">
+                  <Text
+                    minWidth={100}
+                    textAlign={{ base: 'center', md: 'end' }}
+                  >
                     {getMoneyMask(totalValue, 'R$ ', 2)}
                   </Text>
                 </Flex>
@@ -135,7 +149,7 @@ const Carrinho = ({ setReload, reload }) => {
         </Flex>
         <Flex flexDirection="column">
           <Flex
-            minWidth={400}
+            minWidth={{ base: '100%', md: '400px' }}
             backgroundColor="gray.200"
             padding={8}
             gap={4}

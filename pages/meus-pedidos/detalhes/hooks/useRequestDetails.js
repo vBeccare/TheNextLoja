@@ -6,7 +6,6 @@ import { getAllItems, getAllRequests } from '../../../../services/orders'
 const useRequestDetails = () => {
   const [order, setOrder] = useState([])
   const [orderItems, setOrderItems] = useState([])
-  const [clientId, setClientId] = useState()
 
   const router = useRouter()
   const requestNumber = router.query.request
@@ -41,7 +40,7 @@ const useRequestDetails = () => {
 
   useEffect(() => {
     handleRequestDetails()
-  }, [])
+  }, [requestNumber])
 
   return {
     requestNumber,

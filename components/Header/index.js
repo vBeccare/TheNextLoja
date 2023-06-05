@@ -28,7 +28,7 @@ const Header = ({ reload, setReload, hasFilter = true }) => {
     handleRequests,
     handleCart,
     cartItems,
-    totalItems
+    totalItems,
   } = useHeader({ reload, setReload })
 
   return (
@@ -36,19 +36,20 @@ const Header = ({ reload, setReload, hasFilter = true }) => {
       display="flex"
       width="100%"
       alignItems="center"
-      paddingX="160px"
+      paddingX={{ base: '16px', md: '160px' }}
       h="120px"
       bgColor="teal.500"
     >
       <Image
-        boxSize="120px"
+        boxSize={{ base: '60px', md: '120px' }}
         cursor="pointer"
         src="/logoadm.png"
+        alt="logo"
         onClick={handleHome}
       />
       <Box
         display="flex"
-        marginLeft="80px"
+        marginLeft={{ base: '16px', md: '80px' }}
         alignItems="center"
         width="100%"
         fontSize={16}
@@ -63,12 +64,17 @@ const Header = ({ reload, setReload, hasFilter = true }) => {
             color="white"
             placeholder=""
             disabled={!hasFilter}
-            maxWidth="400px"
+            maxWidth={{ base: '200px', md: '400px' }}
             size="md"
             type="search"
           />
 
-          <Image marginLeft="8px" boxSize="20px" src="/iconSearch2.png" />
+          <Image
+            marginLeft="8px"
+            boxSize="20px"
+            src="/iconSearch2.png"
+            alt="pesquisa"
+          />
         </Flex>
         <Menu>
           <MenuButton
@@ -83,11 +89,13 @@ const Header = ({ reload, setReload, hasFilter = true }) => {
                 src="/avatar.png"
                 bgColor="gray.200"
                 borderRadius="50%"
+                alt="avatar"
                 padding="8px"
               />
               <Text
                 fontSize="12px"
                 marginLeft="8px"
+                display={{ base: 'none', md: 'block' }}
                 fontWeight="bold"
                 minWidth="120px"
                 color="white"
@@ -101,6 +109,23 @@ const Header = ({ reload, setReload, hasFilter = true }) => {
 
           {!isLogged && (
             <MenuList>
+              <MenuItem
+                display={{ base: 'flex', md: 'none' }}
+                onClick={handleCart}
+              >
+                Carrinho{' '}
+                {cartItems?.length > 0 && (
+                  <Text
+                    marginLeft="8px"
+                    borderRadius="50%"
+                    padding="1px 7px"
+                    color="white"
+                    background="red"
+                  >
+                    {totalItems}
+                  </Text>
+                )}
+              </MenuItem>
               <MenuItem onClick={handleSignIn}>Entre</MenuItem>
               <MenuItem onClick={handleSignUp}>Cadastre-se</MenuItem>
             </MenuList>
@@ -108,18 +133,44 @@ const Header = ({ reload, setReload, hasFilter = true }) => {
 
           {isLogged && (
             <MenuList>
+              <MenuItem
+                display={{ base: 'flex', md: 'none' }}
+                onClick={handleCart}
+              >
+                Carrinho{' '}
+                {cartItems?.length > 0 && (
+                  <Text
+                    marginLeft="8px"
+                    borderRadius="50%"
+                    padding="1px 7px"
+                    color="white"
+                    background="red"
+                  >
+                    {totalItems}
+                  </Text>
+                )}
+              </MenuItem>
               <MenuItem onClick={handleRequests}>Meus pedidos</MenuItem>
               <MenuItem onClick={handleModify}>Alterar cadastro</MenuItem>
               <MenuItem onClick={handleLogout}>Sair</MenuItem>
             </MenuList>
           )}
         </Menu>
-        <div className={styles.cartWrapper} onClick={handleCart}>
-          <Image marginLeft="auto" boxSize="48px" src="/carrinho.png" />
+        <Flex
+          className={styles.cartWrapper}
+          display={{ base: 'none', md: 'flex' }}
+          onClick={handleCart}
+        >
+          <Image
+            marginLeft="auto"
+            boxSize="48px"
+            src="/carrinho.png"
+            alt="carrinho"
+          />
           {cartItems?.length > 0 && (
             <span className={styles.cart}>{totalItems}</span>
           )}
-        </div>
+        </Flex>
       </Box>
       <Box></Box>
     </Box>

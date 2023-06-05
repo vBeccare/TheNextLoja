@@ -4,11 +4,11 @@ const Rating = ({ avaliacao }) => {
   if (avaliacao === 0) {
     return (
       <Flex>
-        <Image src="/estrelavazia.png" />
-        <Image src="/estrelavazia.png" />
-        <Image src="/estrelavazia.png" />
-        <Image src="/estrelavazia.png" />
-        <Image src="/estrelavazia.png" />
+        <Image src="/estrelavazia.png" alt="estrela" />
+        <Image src="/estrelavazia.png" alt="estrela" />
+        <Image src="/estrelavazia.png" alt="estrela" />
+        <Image src="/estrelavazia.png" alt="estrela" />
+        <Image src="/estrelavazia.png" alt="estrela" />
       </Flex>
     );
   }
@@ -16,10 +16,10 @@ const Rating = ({ avaliacao }) => {
     return (
       <Flex>
         <Image src="/meiaestrela.png" />
-        <Image src="/estrelavazia.png" />
-        <Image src="/estrelavazia.png" />
-        <Image src="/estrelavazia.png" />
-        <Image src="/estrelavazia.png" />
+        <Image src="/estrelavazia.png" alt="estrela" />
+        <Image src="/estrelavazia.png" alt="estrela" />
+        <Image src="/estrelavazia.png" alt="estrela" />
+        <Image src="/estrelavazia.png" alt="estrela" />
       </Flex>
     );
   }
@@ -27,10 +27,10 @@ const Rating = ({ avaliacao }) => {
     return (
       <Flex>
         <Image src="/estrelacheia.png" />
-        <Image src="/estrelavazia.png" />
-        <Image src="/estrelavazia.png" />
-        <Image src="/estrelavazia.png" />
-        <Image src="/estrelavazia.png" />
+        <Image src="/estrelavazia.png" alt="estrela" />
+        <Image src="/estrelavazia.png" alt="estrela" />
+        <Image src="/estrelavazia.png" alt="estrela" />
+        <Image src="/estrelavazia.png" alt="estrela" />
       </Flex>
     );
   }
@@ -39,9 +39,9 @@ const Rating = ({ avaliacao }) => {
       <Flex>
         <Image src="/estrelacheia.png" />
         <Image src="/meiaestrela.png" />
-        <Image src="/estrelavazia.png" />
-        <Image src="/estrelavazia.png" />
-        <Image src="/estrelavazia.png" />
+        <Image src="/estrelavazia.png" alt="estrela" />
+        <Image src="/estrelavazia.png" alt="estrela" />
+        <Image src="/estrelavazia.png" alt="estrela" />
       </Flex>
     );
   }
@@ -50,9 +50,9 @@ const Rating = ({ avaliacao }) => {
       <Flex>
         <Image src="/estrelacheia.png" />
         <Image src="/estrelacheia.png" />
-        <Image src="/estrelavazia.png" />
-        <Image src="/estrelavazia.png" />
-        <Image src="/estrelavazia.png" />
+        <Image src="/estrelavazia.png" alt="estrela" />
+        <Image src="/estrelavazia.png" alt="estrela" />
+        <Image src="/estrelavazia.png" alt="estrela" />
       </Flex>
     );
   }
@@ -62,8 +62,8 @@ const Rating = ({ avaliacao }) => {
         <Image src="/estrelacheia.png" />
         <Image src="/estrelacheia.png" />
         <Image src="/meiaestrela.png" />
-        <Image src="/estrelavazia.png" />
-        <Image src="/estrelavazia.png" />
+        <Image src="/estrelavazia.png" alt="estrela" />
+        <Image src="/estrelavazia.png" alt="estrela" />
       </Flex>
     );
   }
@@ -73,8 +73,8 @@ const Rating = ({ avaliacao }) => {
         <Image src="/estrelacheia.png" />
         <Image src="/estrelacheia.png" />
         <Image src="/estrelacheia.png" />
-        <Image src="/estrelavazia.png" />
-        <Image src="/estrelavazia.png" />
+        <Image src="/estrelavazia.png" alt="estrela" />
+        <Image src="/estrelavazia.png" alt="estrela" />
       </Flex>
     );
   }
@@ -85,7 +85,7 @@ const Rating = ({ avaliacao }) => {
         <Image src="/estrelacheia.png" />
         <Image src="/estrelacheia.png" />
         <Image src="/meiaestrela.png" />
-        <Image src="/estrelavazia.png" />
+        <Image src="/estrelavazia.png" alt="estrela" />
       </Flex>
     );
   }
@@ -96,7 +96,7 @@ const Rating = ({ avaliacao }) => {
         <Image src="/estrelacheia.png" />
         <Image src="/estrelacheia.png" />
         <Image src="/estrelacheia.png" />
-        <Image src="/estrelavazia.png" />
+        <Image src="/estrelavazia.png" alt="estrela" />
       </Flex>
     );
   }

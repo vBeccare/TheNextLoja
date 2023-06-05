@@ -19,12 +19,7 @@ const Pedidos = ({ reload, setReload }) => {
     handleReturnPayment,
   } = useRequestDetails()
   return (
-    <Flex
-      height="100vh"
-      marginBottom={16}
-      display="flex"
-      flexDirection="column"
-    >
+    <Flex height="100vh" marginBottom={8} display="flex" flexDirection="column">
       <Header reload={reload} setReload={setReload} hasFilter={false} />
       <Flex marginX={8} marginTop={16} flexDirection="column">
         <Text
@@ -35,7 +30,12 @@ const Pedidos = ({ reload, setReload }) => {
         >
           Resumo
         </Text>
-        <Flex gap={8} marginTop={8} marginX={16}>
+        <Flex
+          gap={8}
+          marginTop={8}
+          marginX={{ base: '0', md: '16' }}
+          flexDirection={{ base: 'column', md: 'row' }}
+        >
           <Flex
             flexDirection="column"
             backgroundColor="gray.200"
@@ -51,7 +51,11 @@ const Pedidos = ({ reload, setReload }) => {
                   key={idx}
                   justifyContent="space-between"
                   gap={8}
+                  border={{ base: '1px solid white', md: 'none' }}
+                  borderRadius={8}
+                  padding={{ base: 4, md: 0 }}
                   paddingRight={16}
+                  flexDirection={{ base: 'column', md: 'row' }}
                 >
                   <Text minWidth={180} maxWidth={180}>
                     {name}
@@ -66,7 +70,11 @@ const Pedidos = ({ reload, setReload }) => {
               )
             })}
 
-            <Flex justifyContent="center" gap={16} marginTop={100}>
+            <Flex
+              justifyContent="center"
+              gap={16}
+              marginTop={{ base: 50, md: 100 }}
+            >
               <Button
                 isDisabled={isButtonDisabled}
                 onClick={handleReturnPayment}
@@ -87,7 +95,7 @@ const Pedidos = ({ reload, setReload }) => {
 
           <Flex flexDirection="column">
             <Flex
-              minWidth={400}
+              minWidth={{ base: '200', md: '400' }}
               backgroundColor="gray.200"
               padding={8}
               gap={4}

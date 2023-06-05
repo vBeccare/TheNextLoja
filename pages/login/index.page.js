@@ -18,7 +18,7 @@ const Login = () => {
         py={16}
         borderRadius={8}
       >
-        <Image boxSize="160px" src="/logohome.png" />
+        <Image boxSize="160px" src="/logohome.png" alt="logo" />
         <Flex flexDirection="column">
           <Input
             placeholder="email@email.com"

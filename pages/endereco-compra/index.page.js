@@ -57,7 +57,7 @@ const Carrinho = ({ setReload, reload, setReloadAddress, reloadAddress }) => {
   } = useEnderecoData({ onClose, getAddressList })
 
   return (
-    <Flex flexDirection="column">
+    <Flex flexDirection="column" marginBottom={8}>
       <HeaderSimple />
       <Text
         fontSize={32}
@@ -69,7 +69,11 @@ const Carrinho = ({ setReload, reload, setReloadAddress, reloadAddress }) => {
         Endereço
       </Text>
 
-      <Flex marginTop={16} paddingX={16} gap={16}>
+      <Flex
+        marginTop={{ base: '8', md: '16' }}
+        paddingX={{ base: '2%', md: '16' }}
+        gap={16}
+      >
         <Flex flex={1} gap={8} flexDirection="column">
           <Flex
             flexDirection="column"
@@ -78,9 +82,16 @@ const Carrinho = ({ setReload, reload, setReloadAddress, reloadAddress }) => {
             borderRadius={8}
             gap={8}
           >
-            <Flex justifyContent="space-between">
-              <Text fontSize={24}>Selecione o endereço de entrega</Text>
-              <Button colorScheme="teal" onClick={openModal}>Adicionar novo</Button>
+            <Flex
+              justifyContent="space-between"
+              flexDirection={{ base: 'column', md: 'row' }}
+            >
+              <Text fontSize={24} marginBottom={{ base: 8, md: 0 }}>
+                Selecione o endereço de entrega
+              </Text>
+              <Button colorScheme="teal" onClick={openModal}>
+                Adicionar novo
+              </Button>
             </Flex>
             <Flex gap={8} overflowX="scroll" maxWidth="80vw" padding={4}>
               {addressList.map((address) => {

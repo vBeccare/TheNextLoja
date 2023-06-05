@@ -16,7 +16,7 @@ const ProductItem = ({ name, price, image = '', id }) => {
       paddingY={10}
       cursor="pointer"
     >
-      <Image boxSize="140px" objectFit="contain" src={image} />
+      <Image boxSize="140px" objectFit="contain" src={image} alt="produto" />
       <Text
         fontSize="20px"
         whiteSpace="nowrap"

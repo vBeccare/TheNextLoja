@@ -32,7 +32,7 @@ const VisualizarProduto = ({ reload, setReload }) => {
       flexDirection="column"
     >
       <Header reload={reload} setReload={setReload} />
-      <Flex padding="32px" marginX={'auto'}>
+      <Flex padding="32px" marginX={'auto'} flexDirection={{base: 'column', md: 'row'}}>
         <Flex
           marginY={'auto'}
           flexDirection="column"
@@ -42,8 +42,8 @@ const VisualizarProduto = ({ reload, setReload }) => {
           padding="32px"
         >
           <Image
-            width="450px"
-            height="450px"
+            width={{ base: '200px', md: '450px' }}
+            height={{ base: '200px', md: '450px' }}
             objectFit="contain"
             cursor="zoom-in"
             className="carrousel-image"
@@ -66,11 +66,12 @@ const VisualizarProduto = ({ reload, setReload }) => {
           </Flex>
         </Flex>
         <Flex
-          marginLeft="16px"
+          marginLeft={{ base: '0px', md: '16px' }}
+          marginTop={{ base: '16px', md: '0px' }}
           padding="32px"
           backgroundColor="#d9d9d9"
           borderRadius="8px"
-          minWidth={450}
+          minWidth={{ base: '100%', md: '450px' }}
           flexDirection="column"
         >
           <Text marginBottom="20px" fontSize={30}>

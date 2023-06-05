@@ -24,7 +24,7 @@ const MyRequests = ({ reload, setReload }) => {
         status: order.status,
       }))
 
-      setOrderList(formattedOrderList)
+      setOrderList(formattedOrderList.reverse())
     })
   }
 
@@ -42,7 +42,7 @@ const MyRequests = ({ reload, setReload }) => {
       flexDirection="column"
     >
       <Header reload={reload} setReload={setReload} hasFilter={false} />
-      <Flex marginX={32} marginTop={16} flexDirection="column">
+      <Flex marginX={{ base: 0, md: 32 }} marginTop={16} flexDirection="column">
         <Text
           fontSize={32}
           fontWeight="bold"

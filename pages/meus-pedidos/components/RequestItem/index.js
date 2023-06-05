@@ -11,11 +11,13 @@ const RequestItem = ({ number, status, date, totalValue }) => {
       padding={8}
       justifyContent="space-between"
       alignItems="center"
+      flexDirection={{ base: 'column', md: 'row' }}
+      gap={{ base: 4, md: 0 }}
     >
       <Text>#{number}</Text>
       <Text>{date}</Text>
       <Text>{getMoneyMask(totalValue, 'R$', 2)}</Text>
-      <Text>{status}</Text>
+      <Text minWidth={{base: '100%', md: '180px'}}>{status}</Text>
 
       <Button colorScheme="blue" onClick={() =>handleRequestDetails(number)}>Detalhes</Button>
     </Flex>
