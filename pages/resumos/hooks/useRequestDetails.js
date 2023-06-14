@@ -19,7 +19,7 @@ const useRequestDetails = () => {
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem('carrinho'))
-    const totalCompra = localStorage.getItem('totalCompra')
+    const totalCompra = Number(localStorage.getItem('totalCompra'))
     const frete = JSON.parse(localStorage.getItem('frete'))
     const paymentMethod = localStorage.getItem('paymentMethod')
     const paymentDetails = JSON.parse(localStorage.getItem('paymentData'))

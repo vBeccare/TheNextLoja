@@ -37,6 +37,7 @@ const useVisualizarProduto = ({ reload, setReload }) => {
       currentProduct.totalValue = currentProduct?.qtd * preco
     }
     if (currentProduct) {
+      //alterar valor do produto, qtd e total e deixar organizado
       carrinho.splice(currentProductIndex, 1, currentProduct)
       localStorage.setItem('carrinho', JSON.stringify(carrinho))
     } else {
@@ -48,7 +49,7 @@ const useVisualizarProduto = ({ reload, setReload }) => {
             { id, name: nome, value: preco, qtd: 1, totalValue: preco },
           ]),
         )
-      } else {
+      } else {  //quando o carrinho ta vazio
         localStorage.setItem(
           'carrinho',
           JSON.stringify([
